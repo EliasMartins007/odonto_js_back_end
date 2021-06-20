@@ -22,7 +22,7 @@ module.exports = function (app) {
 
   //atualização
   //(PUT) : localhost:3009/odonto/:produtoId
-  // app.put('/odonto/produto/:produtoId', produto.update_a_produto);
+  app.put('/odonto/produto/:produtoId', produto.update);
 
   //delete
   //(DELETE) : localhost:3009/odonto/:produtoId

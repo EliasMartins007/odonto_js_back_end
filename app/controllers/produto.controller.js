@@ -179,7 +179,35 @@ exports.findOne = (req, res, next) => {
 //   res.status(200).send(response.rows);
 // };
 //update falta 15/06/2021
-
+exports.update = (req, res) => {
+  // Validate Request
+  if (!req.body) {
+    res.status(400).send({
+      message: 'Content can not be empty!',
+    });
+  }
+  try {
+    Produto.updateById(
+      req.params.produtoId,
+      new Produto(req.body),
+      (err, data) => {
+        if (err) {
+          if (err.kind === 'not_found') {
+            res.status(404).send({
+              message: `Not found Produto with id ${req.params.produtoId}.`,
+            });
+          } else {
+            res.status(500).send({
+              message: 'Error updating Produto with id ' + req.params.produtoId,
+            });
+          }
+        } else res.send(data);
+      }
+    );
+  } catch (err) {
+    console.log({ error: true, message: err.message });
+  }
+};
 //delete
 exports.delete = (req, res) => {
   Produto.remove(req.params.produtoId, (err, data) => {

@@ -184,8 +184,41 @@ Produto.findById = (produtoId, result) => {
 
 //fim teste busca unica
 //asyn await por enquanto gerando erro no console !!!
-//delete
 
+//UPDATE produto, data_atualizaçao = ? 20/06/2021
+Produto.updateById = (id, produtoId, result) => {
+  try {
+    sql.query(
+      'UPDATE produtos SET descricao = ?, quantidade= ?, codigo_consultorio= ? WHERE codigo = ?',
+      [
+        produtoId.descricao,
+        produtoId.quantidade,
+        produtoId.codigo_consultorio,
+        //   consultorioId.data_atualizaçao.Date.now(), verificar campo atualização
+        id,
+      ],
+      (err, res) => {
+        if (err) {
+          console.log('error: ', err);
+          result(null, err);
+          return;
+        }
+
+        if (res.affectedRows == 0) {
+          // not found Consultorio with the id
+          result({ kind: 'not_found' }, null);
+          return;
+        }
+
+        console.log('updated produto: ', { id: id, ...produtoId });
+        result(null, { id: id, ...produtoId });
+      }
+    );
+  } catch (err) {
+    console.log({ error: true, message: err.message });
+  }
+};
+//delete
 //original
 // Consultorio.remove = (id, result) => {
 //   sql.query('DELETE FROM consultorio WHERE  codigo = ?', id, (err, res) => {
