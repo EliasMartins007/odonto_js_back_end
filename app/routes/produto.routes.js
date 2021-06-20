@@ -9,18 +9,23 @@ module.exports = function (app) {
   //
   //
   //criação19/06/2021
+  //(POST): localhost:3009/odonto/novofuncionario
   app.post('/odonto/novoProduto', produto.create_a_produto);
 
   // busca todos async arrow function !!
+  //(GET): localhost:3009/odonto/produtos
   app.get('/odonto/produtos', produto.findAll);
 
   //busca unico
+  //(GET): localhost:3009/odonto/:produtoId
   app.get('/odonto/produto/:produtoId', produto.findOne);
 
   //atualização
+  //(PUT) : localhost:3009/odonto/:produtoId
   // app.put('/odonto/produto/:produtoId', produto.update_a_produto);
 
   //delete
+  //(DELETE) : localhost:3009/odonto/:produtoId
   app.delete('/odonto/produto/:produtoId', produto.delete);
 };
 

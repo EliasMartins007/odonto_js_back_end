@@ -1,6 +1,9 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+// //teste novo router 20/06/2021
+// const odontoRouter = require('./app/routes/router.js');
+// //fim teste 20/06/2021
 const app = express();
 
 //teste 15/06/2021 resolver
@@ -26,23 +29,13 @@ app.post('/outros', (req, res) => {
   res.json({ message: 'teste' });
 });
 
-/*19/06/2021
- app.post('/odonto/novoProduto', produto.create_a_produto);
-*/
-// const produto = require('./app/controllers/produto.controller');
-// app.get('/odonto/produtos', produto.findAll);
-//fim teste 19/06/2021
-
-//teste 18/06/2021 elias conectar front
-app.use('/b', (req, res) => {
+app.use('/teste', (req, res) => {
   res.send({ teste: 'teste' });
 });
-//fim teste
 
-//require('./app/routes/customer.routes.js')(app); // ok crud
-//require('./app/routes/task.routes.js')(app); //ok crud
 //original funcionando 15/06/2021
 
+//teste novo router 20/06/2021
 //do PA 2021
 require('./app/routes/consultorio.routes.js')(app); //ok get
 require('./app/routes/convenio.routes.js')(app); //ok get
@@ -52,10 +45,12 @@ require('./app/routes/procedimento.routes.js')(app); //ok get
 require('./app/routes/usuario.routes.js')(app); //ok get
 require('./app/routes/funcionario.routes.js')(app); //ok get
 require('./app/routes/paciente.routes.js')(app); // ok get
+
+//fim teste 20/06/2021
 //require('./app/routes/horario_referencia.routes.js')(app); //ok get
 // //fim teste
 
-//teste Router
+//teste Router 20/06/2021
 //app.use(OdontoRouter);
 //fim teste
 
