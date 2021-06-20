@@ -22,22 +22,37 @@ app.use(cors());
 //fim midlewares
 
 // simples route
-app.get('/outros', (req, res) => {
+app.post('/outros', (req, res) => {
   res.json({ message: 'teste' });
 });
+
+/*19/06/2021
+ app.post('/odonto/novoProduto', produto.create_a_produto);
+*/
+// const produto = require('./app/controllers/produto.controller');
+// app.get('/odonto/produtos', produto.findAll);
+//fim teste 19/06/2021
+
+//teste 18/06/2021 elias conectar front
+app.use('/b', (req, res) => {
+  res.send({ teste: 'teste' });
+});
+//fim teste
 
 //require('./app/routes/customer.routes.js')(app); // ok crud
 //require('./app/routes/task.routes.js')(app); //ok crud
 //original funcionando 15/06/2021
-//require('./app/routes/consultorio.routes.js')(app); //ok get
-//require('./app/routes/convenio.routes.js')(app); //ok get
+
+//do PA 2021
+require('./app/routes/consultorio.routes.js')(app); //ok get
+require('./app/routes/convenio.routes.js')(app); //ok get
 require('./app/routes/produto.routes.js')(app); //ok get
-//require('./app/routes/perfil.routes.js')(app); //ok get
+require('./app/routes/perfil.routes.js')(app); //ok get
 require('./app/routes/procedimento.routes.js')(app); //ok get
-//require('./app/routes/usuario.routes.js')(app); //ok get
-//require('./app/routes/funcionario.routes.js')(app); //ok get
+require('./app/routes/usuario.routes.js')(app); //ok get
+require('./app/routes/funcionario.routes.js')(app); //ok get
 require('./app/routes/paciente.routes.js')(app); // ok get
-////require('./app/routes/horario_referencia.routes.js')(app); //ok get
+//require('./app/routes/horario_referencia.routes.js')(app); //ok get
 // //fim teste
 
 //teste Router
@@ -45,6 +60,10 @@ require('./app/routes/paciente.routes.js')(app); // ok get
 //fim teste
 
 const PORT = process.env.PORT || 3009;
-app.listen(PORT, async () => {
+// app.listen(PORT, async () => {
+//   console.log(`back end rodando na porta: ${PORT}.`);
+// });
+//teste 18/06/2021
+app.listen(PORT, () => {
   console.log(`back end rodando na porta: ${PORT}.`);
 });

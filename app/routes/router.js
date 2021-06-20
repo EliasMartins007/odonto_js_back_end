@@ -1,4 +1,4 @@
-//arquivo que tera todas as rotas  15/06/2021 elias
+//arquivo que tera todas as rotas  15/06/2021 elias  outro teste arquivo completo
 // const { Router } = require('express');
 // const router = Router();
 //require('./app/routes/customer.routes.js')(app);// ok crud
