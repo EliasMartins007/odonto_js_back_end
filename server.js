@@ -30,7 +30,10 @@ app.post('/outros', (req, res) => {
 });
 
 app.use('/teste', (req, res) => {
-  res.send({ teste: 'teste' });
+  res.json({ teste: 'teste' });
+});
+app.get('/teste2', (req, res) => {
+  res.json({ teste: 'teste' });
 });
 
 //original funcionando 15/06/2021
