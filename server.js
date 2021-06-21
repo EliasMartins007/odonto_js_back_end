@@ -6,14 +6,6 @@ const cors = require('cors');
 // //fim teste 20/06/2021
 const app = express();
 
-//teste 15/06/2021 resolver
-// const resolver = (handlerFn) => {
-//   return (req, res, next) => {
-//     return Promise.resolve(handlerFn(req, res, next)).catch((e) => next(e));
-//   };
-// };
-//fim teste
-
 // parse requests of content-type - application/json
 app.use(bodyParser.json());
 // parse requests of content-type - application/x-www-form-urlencoded
@@ -25,9 +17,6 @@ app.use(cors());
 //fim midlewares
 
 // simples route
-app.post('/outros', (req, res) => {
-  res.json({ message: 'teste' });
-});
 
 app.use('/teste', (req, res) => {
   res.json({ teste: 'teste' });

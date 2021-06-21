@@ -1,5 +1,5 @@
 {
-  "name": "nodejs-express-mysql",
+  "name": "pa-back-end",
   "version": "1.0.0",
   "description": "Back end para consultorio",
   "main": "server.js",

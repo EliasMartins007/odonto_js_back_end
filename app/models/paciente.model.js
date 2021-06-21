@@ -171,7 +171,9 @@ Paciente.getAll = (result) => {
 //teste asyn
 Paciente.findById = (pacienteId, result) => {
   sql.query(
-    `SELECT * FROM pacientes WHERE codigo = ${pacienteId}`,
+    'SELECT * FROM pacientes WHERE codigo = ?',
+    pacienteId,
+    //`SELECT * FROM pacientes WHERE codigo = ${pacienteId}`,
     (err, res) => {
       if (err) {
         console.log('error: ', err);
@@ -180,7 +182,12 @@ Paciente.findById = (pacienteId, result) => {
       }
 
       if (res.length) {
-        console.log('found paciente: ', res[0]);
+        console.log('Paciente: ', res[0]); // funcionando 21/06/2021
+        //
+        //
+        //update produto
+        //console.log('updated produto: ', { id: id, ...produtoId });
+
         result(null, res[0]);
         return;
       }
