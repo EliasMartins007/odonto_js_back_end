@@ -91,9 +91,9 @@ Paciente.getAllpaciente = function (result) {
 //   });
 // };
 
-//funcionando 13/06/2021
+//funcionando 22/06/2021
 
-// paciente.getAll = (result) => {
+// Paciente.getAll = (result) => {
 //   sql.query('SELECT * FROM pacientes', (err, res) => {
 //     if (err) {
 //       console.log('error: ', err);
@@ -105,9 +105,9 @@ Paciente.getAllpaciente = function (result) {
 //     result(null, res);
 //   });
 // };
-
+//teste json
 Paciente.getAll = (result) => {
-  sql.query('SELECT * FROM pacientes', (err, res) => {
+  const paciente = sql.query('SELECT * FROM pacientes', (err, res) => {
     if (err) {
       console.log('error: ', err);
       result(null, err);
@@ -116,6 +116,10 @@ Paciente.getAll = (result) => {
 
     console.log('paciente: ', res);
     result(null, res);
+    //result(null, res.json());//tenho que mudar retorno para json 22/06/2021
+    //teste 22/06/2021
+    //console.log({ paciente });
+    return { paciente };
   });
 };
 
@@ -143,32 +147,9 @@ Paciente.getAll = (result) => {
 //   res.status(200).send(response.rows);
 // };
 
-//busca unica
-// paciente.findById = (pacienteId, result) => {
-//   sql.query(
-//     `SELECT * FROM pacientes WHERE codigo = ${pacienteId}`,
-//     (err, res) => {
-//       if (err) {
-//         console.log('error: ', err);
-//         result(err, null);
-//         return;
-//       }
-
-//       if (res.length) {
-//         console.log('found paciente: ', res[0]);
-//         result(null, res[0]);
-//         return;
-//       }
-
-//       // not found paciente with the id
-//       result({ kind: 'not_found' }, null);
-//     }
-//   );
-// };
-
 //teste asyn
 Paciente.findById = (pacienteId, result) => {
-  sql.query(
+  const pa = sql.query(
     'SELECT * FROM pacientes WHERE codigo = ?',
     pacienteId,
     //`SELECT * FROM pacientes WHERE codigo = ${pacienteId}`,
@@ -186,8 +167,8 @@ Paciente.findById = (pacienteId, result) => {
         //update produto
         //console.log('updated produto: ', { id: id, ...produtoId });
 
-        result(null, res[0]);
-        return;
+        result(null, JSON.stringify.res[0]);
+        return { pa };
         //22/06/2021  return { error: false, result: pacienteId };
       }
 

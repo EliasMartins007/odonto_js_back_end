@@ -66,7 +66,8 @@ exports.findAll = (req, res, next) => {
         //original
         //res.send(data);
         //teste 22/06/2021
-        res.send({ error: false, Pacientes: data });
+        // res.send({ error: false, Pacientes: data });
+        res.json({ error: false, Pacientes: data }); //tenho que mudar retorno para json 22/06/2021
       }
     });
   } catch (err) {
