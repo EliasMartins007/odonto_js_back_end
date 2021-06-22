@@ -106,8 +106,6 @@ Paciente.getAllpaciente = function (result) {
 //   });
 // };
 
-// teste mudar metodo para async
-//deu certo
 Paciente.getAll = (result) => {
   sql.query('SELECT * FROM pacientes', (err, res) => {
     if (err) {
@@ -190,6 +188,7 @@ Paciente.findById = (pacienteId, result) => {
 
         result(null, res[0]);
         return;
+        //22/06/2021  return { error: false, result: pacienteId };
       }
 
       // not found paciente with the id

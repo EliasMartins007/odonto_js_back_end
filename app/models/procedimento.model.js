@@ -111,7 +111,7 @@ Procedimento.findById = async (procedimentoId, result) => {
       }
 
       if (res.length) {
-        console.log('found procedimento: ', res[0]);
+        console.log('Procedimento: ', res[0]);
         result(null, res[0]);
         return;
       }

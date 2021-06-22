@@ -168,7 +168,7 @@ Produto.findById = (produtoId, result) => {
         }
 
         if (res.length) {
-          console.log('found produto: ', res[0]);
+          console.log('Produto: ', res[0]);
           result(null, res[0]);
           return;
         }

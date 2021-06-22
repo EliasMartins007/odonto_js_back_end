@@ -62,7 +62,12 @@ exports.findAll = (req, res, next) => {
         res.status(500).send({
           message: err.message || 'Some error occurred paciente.',
         });
-      else res.send(data);
+      else {
+        //original
+        //res.send(data);
+        //teste 22/06/2021
+        res.send({ error: false, Pacientes: data });
+      }
     });
   } catch (err) {
     console.log({ error: true, message: err.message });
@@ -84,7 +89,14 @@ exports.findOne = (req, res, next) => {
               'Error retrieving Pacinete with id ' + req.params.pacienteId,
           });
         }
-      } else res.json({ data }); // res.send(data); //res.json(data); ou //res.send(data); os dois funcionam
+      } // res.send(data); //22/06/2021 elias
+      else {
+        res.send({ error: false, paciente: data });
+        // res.json({ error: false, paciente: data });
+        //res.json({ paciente: data }); // funciona 21/06/2021  res.json({ data }); // res.send(data); //res.json(data); ou //res.send(data); os dois funcionam
+        //silvio 22/06/2021
+        //return {error: false, data: res.data};
+      }
     });
   } catch (err) {
     console.log({ error: true, message: err.message });

@@ -68,7 +68,11 @@ exports.findOne = (req, res, next) => {
               req.params.consultorioId,
           });
         }
-      } else res.send(data); //res.json(data); ou //res.send(data); os dois funcionam
+      } else {
+        //teste 22/06/2021
+        res.json({ error: false, consultorio: data });
+        // funcionandores.json({ consultorio: data }); //res.send(data); //res.json(data); ou //res.send(data); os dois funcionam
+      }
     });
   } catch (err) {
     console.log({ error: true, message: err.message });
