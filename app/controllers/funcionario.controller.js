@@ -95,7 +95,7 @@ exports.list_all_funcionario = function (req, res) {
 exports.findAll = (req, res, next) => {
   //adicionei next 11/06/2021
   try {
-    console.log('passou aki');
+    console.log('passou aki'); //passando em loop aki 24/06/2021
     Funcionario.getAll((err, data) => {
       if (err)
         res.status(500).send({

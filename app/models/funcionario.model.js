@@ -111,7 +111,9 @@ Funcionario.getAllfuncionario = function (result) {
 // teste mudar metodo para async
 //deu certo
 Funcionario.getAll = (result) => {
-  sql.query('SELECT * FROM funcionarios', (err, res) => {
+  // sql.query('SELECT * FROM funcionarios', (err, res) => {
+  const funcionario = sql.query('SELECT * FROM funcionarios', (err, res) => {
+    //teste 24/02021
     if (err) {
       console.log('error: ', err);
       result(null, err);
@@ -120,6 +122,8 @@ Funcionario.getAll = (result) => {
 
     console.log('funcionario: ', res);
     result(null, res);
+    //teste 24/06/2021 consulta em loop no front end
+    return { funcionario };
   });
 };
 
