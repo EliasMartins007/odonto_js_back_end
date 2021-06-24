@@ -35,8 +35,8 @@ exports.list_all_consultorio = function (req, res) {
   }
 };
 
-//outro mais moderno
-// Retrieve all Customers from the database. do exemplo async
+//SENDO UTILIZADO PARA BUSCAR TODOS OS CONSULTORIOS
+
 exports.findAll = (req, res, next) => {
   //adicionei next 11/06/2021  consultar !!
   try {
@@ -45,7 +45,11 @@ exports.findAll = (req, res, next) => {
         res.status(500).send({
           message: err.message || 'Some error occurred consultorio.',
         });
-      else res.send(data);
+      else {
+        // res.send(data); // oiginal funcionando 22/06/2021
+        //teste 23/06/2021
+        res.json({ error: false, Consultorio: data });
+      }
     });
   } catch (err) {
     console.log({ error: true, message: err.message });

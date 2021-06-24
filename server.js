@@ -16,6 +16,10 @@ app.use(cors());
 //const OdontoRouter = require('./app/routes/produto.routes.js');
 //fim midlewares
 
+//teste json 23/06/2021
+//app.use(express.json()); //testando 23/06/2021 não vi resultado ainda
+//fim teste
+
 // simples route
 
 app.use('/teste', (req, res) => {

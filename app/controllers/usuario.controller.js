@@ -82,9 +82,7 @@ exports.list_all_usuario = function (req, res) {
 };
 
 //outro mais moderno
-
 //teste async de outro tutorial
-
 // ==> Método responsável por listar todos os 'Products':
 // exports.listAllProducts = async (req, res) => {
 //   const response = await db.query(
@@ -92,7 +90,8 @@ exports.list_all_usuario = function (req, res) {
 //   );
 //   res.status(200).send(response.rows);
 // };
-// Retrieve all Customers from the database. do exemplo async
+
+//SENDO UTILIZADO PARA BUSCAR TODOS OS USUARIOS
 exports.findAll = (req, res, next) => {
   //adicionei next 11/06/2021
   try {
@@ -101,7 +100,12 @@ exports.findAll = (req, res, next) => {
         res.status(500).send({
           message: err.message || 'Some error occurred usuário.',
         });
-      else res.send(data);
+      else {
+        //res.send(data); //original funcionando 22/06/2021
+        //teste 23/06/2021
+        res.json({ error: false, Usuario: data });
+        //fim teste 23/06/2021
+      }
     });
   } catch (err) {
     console.log({ error: true, message: err.message });

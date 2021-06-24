@@ -44,7 +44,11 @@ exports.findAll = (req, res, next) => {
         res.status(500).send({
           message: err.message || 'Some error occurred perfil.',
         });
-      else res.send(data);
+      else {
+        //res.send(data); // original funcionando 22/06/2021
+        //teste 23/06/2021
+        res.json({ error: false, Perfil: data });
+      }
     });
   } catch (err) {
     console.log({ error: true, message: err.message });

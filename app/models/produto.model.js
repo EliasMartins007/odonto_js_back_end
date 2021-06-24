@@ -89,9 +89,9 @@ Produto.getAllProduto = function (result) {
 
 // tenho que mudar metodo para async 15/06/2021
 //deu certo
-Produto.getAll = async (result) => {
+Produto.getAll = (result) => {
   try {
-    sql.query('SELECT * FROM produtos', (err, res) => {
+    const produto = sql.query('SELECT * FROM produtos', (err, res) => {
       if (err) {
         console.log('error: ', err);
         result(null, err);
@@ -101,6 +101,7 @@ Produto.getAll = async (result) => {
       console.log('produto: ', res);
       result(null, res); //original
       //teste    result(response); //.status(200).send(response.rows);
+      return { produto };
     });
   } catch (err) {
     console.log({ erro: true, message: error.message });

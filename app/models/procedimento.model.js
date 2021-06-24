@@ -83,7 +83,8 @@ Procedimento.getAllProcedimento = function (result) {
 // teste mudar metodo para async
 //deu certo
 Procedimento.getAll = (result) => {
-  sql.query('SELECT * FROM procedimento', (err, res) => {
+  // sql.query('SELECT * FROM procedimento', (err, res) => { // original alterei para obj 23/06/2021
+  const procedimento = sql.query('SELECT * FROM procedimento', (err, res) => {
     if (err) {
       console.log('error: ', err);
       result(null, err);
@@ -92,6 +93,7 @@ Procedimento.getAll = (result) => {
 
     console.log('procedimento: ', res);
     result(null, res);
+    return { procedimento }; //23/06/2021 não solucionou a questão de undefined
   });
 };
 

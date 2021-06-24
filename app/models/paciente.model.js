@@ -16,7 +16,7 @@ const Paciente = function (paciente) {
   this.telefone1 = paciente.telefone1;
   this.email = paciente.email;
   this.obs = paciente.obs;
-  this.tratamento = paciente.tratamento;
+  this.procedimento = paciente.procedimento; //MUDAR PARA PROCEDIMENTO amtigo tratamento 22/06/2021
   this.status = paciente.status;
   this.convenio = paciente.convenio; //verificar necessidade 14/06/2021 elias
   this.codigo_consultorio = paciente.codigo_consultorio; // FK tenho que verificar 11/06/2021
@@ -37,16 +37,17 @@ const Paciente = function (paciente) {
 // };
 //fim
 Paciente.creatpaciente = (newpaciente, result) => {
+  //(nome, cpf, telefone1, tratamento, codigo_consultorio) 22/06/2021
   sql.query(
     `INSERT INTO pacientes
-    (nome, cpf, telefone1, tratamento, codigo_consultorio)
+    (nome, cpf, telefone1, procedimento, codigo_consultorio)
     VALUES
     (?, ?, ?, ?, ?)`,
     [
       newpaciente.nome,
       newpaciente.cpf,
       newpaciente.telefone1,
-      newpaciente.tratamento,
+      newpaciente.procedimento,
       newpaciente.codigo_consultorio,
     ],
     function (err, res) {
@@ -116,9 +117,8 @@ Paciente.getAll = (result) => {
 
     console.log('paciente: ', res);
     result(null, res);
-    //result(null, res.json());//tenho que mudar retorno para json 22/06/2021
+    //result(null, res.json()); //tenho que mudar retorno para json 22/06/2021
     //teste 22/06/2021
-    //console.log({ paciente });
     return { paciente };
   });
 };
@@ -166,8 +166,8 @@ Paciente.findById = (pacienteId, result) => {
         //
         //update produto
         //console.log('updated produto: ', { id: id, ...produtoId });
-
-        result(null, JSON.stringify.res[0]);
+        result(null, res[0]);
+        // result(null, JSON.stringify.res[0]); //serginho 22/06/2021
         return { pa };
         //22/06/2021  return { error: false, result: pacienteId };
       }

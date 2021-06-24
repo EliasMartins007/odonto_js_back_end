@@ -111,8 +111,9 @@ exports.list_all_produto = function (req, res) {
 //     next(err);
 //   }
 // };
-//teste async error 15/06/2021
-exports.findAll = async (req, res, next) => {
+//BUSCAR TODOS OS PRODUTOS
+//exports.findAll = async (req, res, next) => {
+exports.findAll = (req, res, next) => {
   //adicionei next 11/06/2021 confirmar se teria aki na controller
   try {
     Produto.getAll((err, data) => {
@@ -120,7 +121,11 @@ exports.findAll = async (req, res, next) => {
         res.status(500).send({
           message: err.message || 'Some error occurred produto.',
         });
-      else res.json({ data }); //original res.send(data);
+      else {
+        //res.json({ data }); //original res.send(data); funcionando
+        //teste 22/06/2021
+        res.json({ error: false, Produto: data });
+      }
     });
   } catch (err) {
     console.log({ error: true, message: err.message });

@@ -78,6 +78,7 @@ exports.list_all_procedimento = function (req, res) {
 //   );
 //   res.status(200).send(response.rows);
 // };
+// BUSCAR TODOS OS PROCEDIMENTOS
 // Retrieve all Customers from the database. do exemplo async
 exports.findAll = (req, res, next) => {
   //adicionei next 11/06/2021
@@ -87,7 +88,11 @@ exports.findAll = (req, res, next) => {
         res.status(500).send({
           message: err.message || 'Some error occurred procedimento.',
         });
-      else res.send(data);
+      else {
+        //   res.send(data); // original funcionando 22/06/2021
+        //teste 23/06/2021
+        res.json({ error: false, Procedimento: data });
+      }
     });
   } catch (err) {
     console.log({ error: true, message: err.message });
