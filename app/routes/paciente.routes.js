@@ -12,6 +12,8 @@ module.exports = function (app) {
   //busca unico
   //(GET): localhost:3009/odonto/:pacienteId
   app.get('/odonto/paciente/:pacienteId', paciente.findOne);
+  //teste 28/06 await
+  //app.get('/odonto/paciente/:pacienteId', paciente.findOneTeste); //2806/2021
 
   //atualização
   //(PUT) : localhost:3009/odonto/atualizarPaciente

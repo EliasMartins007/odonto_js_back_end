@@ -78,6 +78,7 @@ exports.findAll = (req, res, next) => {
 
 exports.findOne = (req, res, next) => {
   try {
+    // const { fd } = Paciente.findById(req.params.pacienteId, (err, data) => {
     Paciente.findById(req.params.pacienteId, (err, data) => {
       if (err) {
         if (err.kind === 'not_found') {
@@ -93,6 +94,7 @@ exports.findOne = (req, res, next) => {
       } // res.send(data); //22/06/2021 elias
       else {
         res.send({ error: false, paciente: data });
+        //return { fd };
         // res.json({ error: false, paciente: data });
         //res.json({ paciente: data }); // funciona 21/06/2021  res.json({ data }); // res.send(data); //res.json(data); ou //res.send(data); os dois funcionam
         //silvio 22/06/2021
@@ -101,6 +103,38 @@ exports.findOne = (req, res, next) => {
     });
   } catch (err) {
     console.log({ error: true, message: err.message });
+    next(err);
+  }
+};
+
+exports.findOneTeste = async (req, res, next) => {
+  try {
+    const pacientes = await Paciente.findById(
+      req.params.pacienteId,
+      (err, data) => {
+        if (err) {
+          if (err.kind === 'not_found') {
+            res.status(404).send({
+              message: `Not found Pacinete with id ${req.params.pacienteId}.`,
+            });
+          } else {
+            res.status(500).send({
+              message:
+                'Error retrieving Pacinete with id ' + req.params.pacienteId,
+            });
+          }
+        } else {
+          // res.send({ error: false, paciente: data }); //28/06/2021 funcionando
+          res.json({ error: false, paciente: data });
+          //res.json({ paciente: data }); // funciona 21/06/2021  res.json({ data }); // res.send(data); //res.json(data); ou //res.send(data); os dois funcionam
+          //silvio 22/06/2021
+          //return {error: false, data: res.data};
+        }
+      }
+    );
+  } catch (err) {
+    console.log({ error: true, message: err.message });
+    res.json({ error: true, message: err.message });
     next(err);
   }
 };
