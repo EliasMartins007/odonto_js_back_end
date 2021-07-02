@@ -14,15 +14,15 @@ const Procedimento = function (procedimento) {
 Procedimento.creatProcedimento = (newProcedimento, result) => {
   sql.query(
     `INSERT INTO procedimento
-    (nome, valor_procedimento, tipo, obs, codigo_consultorio)
+    (nome, valor_procedimento, tipo, obs)
     VALUES
-    ( ?, ?, ?, ?, ?)`,
+    ( ?, ?, ?, ?)`, // ( ? ) (nome, valor_procedimento, tipo, obs, codigo_consultorio)
     [
       newProcedimento.nome,
       newProcedimento.valor_procedimento,
       newProcedimento.tipo,
       newProcedimento.obs,
-      newProcedimento.codigo_consultorio,
+      // newProcedimento.codigo_consultorio, 02/07/2021
     ],
 
     //fazer validação vazio!!!
