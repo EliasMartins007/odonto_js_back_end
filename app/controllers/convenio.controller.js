@@ -10,7 +10,7 @@ exports.create_a_convenio = (req, res, next) => {
         .status(400)
         .send({ error: true, message: 'please provide convenio/nome' });
     } else {
-      Convenio.creatProduto(new_convenio, (err, convenio) => {
+      Convenio.creatConvenio(new_convenio, (err, convenio) => {
         if (err)
           //apenas uma linha sem {}
           res.send(err);

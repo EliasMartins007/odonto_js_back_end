@@ -1,6 +1,6 @@
-const sql = require('./db'); //alterei caminho 10/06/2021
+const sql = require('./db');
 
-//obj contrutor  usuario
+//obj construtor  convênio
 const Convenio = function (convenio) {
   this.nome = convenio.nome;
   this.razaosocial = convenio.razaosocial;
@@ -19,19 +19,25 @@ const Convenio = function (convenio) {
 Convenio.creatConvenio = (newConvenio, result) => {
   sql.query(
     `INSERT INTO convenio
-    (nome, razaosocial, email,codigo_consultorio )
+    (nome, razaosocial, telefone1, obs, email, website, banco, agencia, conta, codigo_consultorio )
     VALUES
-    (?, ?, ?, ?, ?)`,
+    (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
     [
       newConvenio.nome,
       newConvenio.razaosocial,
+      newConvenio.telefone1,
+      newConvenio.obs,
       newConvenio.email,
+      newConvenio.website,
+      newConvenio.banco,
+      newConvenio.agencia,
+      newConvenio.conta,
       newConvenio.codigo_consultorio,
     ],
 
     function (err, res) {
       if (err) {
-        console.log('error:', err); //err.message ???
+        console.log('error:', err);
         result(err, null);
       } else {
         console.log(res.insertId);

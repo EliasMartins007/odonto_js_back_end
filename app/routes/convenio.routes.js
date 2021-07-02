@@ -3,7 +3,7 @@ module.exports = function (app) {
 
   //criação
   //(POST): localhost:3009/odonto/novoconvenio
-  // app.post('/odonto/novoconvenio', convenio.create_a_convenio);
+  app.post('/odonto/novoconvenio', convenio.create_a_convenio); //01/07/2021
 
   //busca todos
   //(GET): localhost:3009/odonto/convenios
