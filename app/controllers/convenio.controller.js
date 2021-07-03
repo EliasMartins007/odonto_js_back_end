@@ -84,3 +84,26 @@ exports.findOne = (req, res, next) => {
     next(err);
   }
 };
+
+//delete//delete  03/07/2021
+exports.delete = (req, res, next) => {
+  try {
+    Convenio.remove(req.params.convenioId, (err, data) => {
+      if (err) {
+        if (err.kind === 'not_found') {
+          res.status(404).send({
+            message: `Not found Convenio with id ${req.params.convenioId}.`,
+          });
+        } else {
+          res.status(500).send({
+            message:
+              'Could not delete Convenio with id ' + req.params.convenioId,
+          });
+        }
+      } else res.send({ message: `Convenio deleted successfully!!!` });
+    });
+  } catch (err) {
+    console.log(err);
+    next(err); //03/07/2021
+  }
+};

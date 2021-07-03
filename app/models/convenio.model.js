@@ -97,4 +97,23 @@ Convenio.findById = (convenioId, result) => {
 };
 //fim teste busca unica
 //asyn await por enquanto gerando erro no console !!! devo mudar mysql2/promesys  14/06/2021
+//delete 03/07/2021
+Convenio.remove = (id, result) => {
+  sql.query('DELETE FROM convenio WHERE  codigo = ?', id, (err, res) => {
+    if (err) {
+      console.log('error: ', err);
+      result(null, err);
+      return;
+    }
+
+    if (res.affectedRows == 0) {
+      // not found Customer with the id
+      result({ kind: 'not_found' }, null);
+      return;
+    }
+
+    console.log('deleted convenio  with codigo: ', id);
+    result(null, res);
+  });
+};
 module.exports = Convenio;

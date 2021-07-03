@@ -19,5 +19,5 @@ module.exports = function (app) {
 
   //delete
   //(DELETE) : localhost:3009/odonto/:convenioId
-  // app.delete('/odonto/convenio/:convenioId', convenio.delete);
+  app.delete('/odonto/convenio/:convenioId', convenio.delete);
 };
