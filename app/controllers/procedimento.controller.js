@@ -86,7 +86,7 @@ exports.findAll = (req, res, next) => {
     Procedimento.getAll((err, data) => {
       if (err)
         res.status(500).send({
-          message: err.message || 'Some error occurred procedimento.',
+          message: err.message || 'Some error occurred Procedimeno .',
         });
       else {
         //   res.send(data); // original funcionando 22/06/2021
@@ -184,3 +184,56 @@ exports.findOne2021 = async (req, res, next) => {
     next(err);
   }
 };
+
+//delete//delete  04/07/2021  teste async olhar se esta certo !!!
+exports.delete = async (req, res, next) => {
+  try {
+    const as = await Procedimento.remove(
+      req.params.procedimentoId,
+      (err, data) => {
+        if (err) {
+          if (err.kind === 'not_found') {
+            res.status(404).send({
+              message: `Not found Procedimeno with id ${req.params.procedimentoId}.`,
+            });
+          } else {
+            res.status(500).send({
+              message:
+                'Could not delete Procedimeno  with id ' +
+                req.params.procedimentoId,
+            });
+          }
+        } else
+          res.send({ message: `Procedimeno  deleted successfully!!!`, as });
+      }
+    );
+  } catch (err) {
+    console.log(err);
+    next(err); //04/07/2021
+  }
+};
+//metodo original
+// exports.delete = (req, res, next) => {
+//   try {
+//      Procedimento.remove(req.params.procedimentoId, (err, data) => {
+//         if (err) {
+//           if (err.kind === 'not_found') {
+//             res.status(404).send({
+//               message: `Not found Procedimeno with id ${req.params.procedimentoId}.`,
+//             });
+//           } else {
+//             res.status(500).send({
+//               message:
+//                 'Could not delete Procedimeno  with id ' +
+//                 req.params.procedimentoId,
+//             });
+//           }
+//         } else
+//           res.send({ message: `Procedimeno  deleted successfully!!!`});
+//       }
+//     );
+//   } catch (err) {
+//     console.log(err);
+//     next(err); //04/07/2021
+//   }
+// };

@@ -14,4 +14,9 @@ module.exports = function (app) {
   // app.get('/odonto/procedimento/:procedimentoId', procedimento.findOne);
   //teste obj a terminar 18/06/2021
   app.get('/odonto/procedimento/:procedimentoId', procedimento.findOne2021);
+
+  //04/07/2021
+  //delete
+  //(DELETE) : localhost:3009/odonto/:procedimentoId
+  app.delete('/odonto/procedimento/:procedimentoId', procedimento.delete);
 };

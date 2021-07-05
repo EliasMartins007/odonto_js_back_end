@@ -37,7 +37,7 @@ const Paciente = function (paciente) {
 // };
 //fim
 Paciente.creatpaciente = (newpaciente, result) => {
-  //(nome, cpf, telefone1, tratamento, codigo_consultorio) 22/06/2021
+  //(nome, cpf, telefone1, procedimento, codigo_consultorio) 22/06/2021  14 campos no reducer
   sql.query(
     `INSERT INTO pacientes
     (nome, cpf, telefone1, procedimento, codigo_consultorio)
@@ -179,4 +179,22 @@ Paciente.findById = (pacienteId, result) => {
 };
 //fim teste busca unica
 //asyn await por enquanto gerando erro no console !!!
+
+//delete 04/07/2021
+Paciente.remove = (id, result) => {
+  sql.query('DELETE FROM pacientes WHERE  codigo = ?', id, (err, res) => {
+    if (err) {
+      console.log('error: ', err);
+      result(null, err);
+      return;
+    }
+    if (res.affectedRows == 0) {
+      // not found paciente with the id
+      result({ kind: 'not_found' }, null);
+      return;
+    }
+    console.log('deleted paciente  with codigo: ', id);
+    result(null, res);
+  });
+};
 module.exports = Paciente;

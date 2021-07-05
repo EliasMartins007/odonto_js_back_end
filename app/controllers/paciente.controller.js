@@ -3,7 +3,6 @@ const Paciente = require('../models/paciente.model.js');
 exports.create_a_paciente = (req, res, next) => {
   try {
     let new_paciente = new Paciente(req.body);
-
     //handles null error
     if (!new_paciente.nome) {
       res
@@ -136,5 +135,36 @@ exports.findOneTeste = async (req, res, next) => {
     console.log({ error: true, message: err.message });
     res.json({ error: true, message: err.message });
     next(err);
+  }
+};
+
+//delete  04/07/2021
+exports.delete = async (req, res, next) => {
+  try {
+    const new_paciente = await Paciente.remove(
+      req.params.pacienteId,
+      (err, data) => {
+        //teset async 04/07/2021
+        if (err) {
+          if (err.kind === 'not_found') {
+            res.status(404).send({
+              message: `Not found paciente with id ${req.params.pacienteId}.`,
+            });
+          } else {
+            res.status(500).send({
+              message:
+                'Could not delete paciente with id ' + req.params.pacienteId,
+            });
+          }
+        } else
+          res.send({
+            message: `paciente deleted successfully!!!`,
+            new_paciente,
+          }); //04/07 teste async
+      }
+    );
+  } catch (err) {
+    console.log(err);
+    next(err); //04/07/2021
   }
 };

@@ -19,7 +19,7 @@ module.exports = function (app) {
   //(PUT) : localhost:3009/odonto/atualizarPaciente
   // app.put('/odonto/paciente/:pacienteId', paciente.update_a_paciente);
 
-  //delete
+  //delete //04/07/2021
   //(DELETE) : localhost:3009/odonto/:pacienteId
-  // app.delete('/odonto/paciente/:pacienteId', paciente.delete);
+  app.delete('/odonto/paciente/:pacienteId', paciente.delete);
 };

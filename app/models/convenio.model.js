@@ -105,13 +105,11 @@ Convenio.remove = (id, result) => {
       result(null, err);
       return;
     }
-
     if (res.affectedRows == 0) {
-      // not found Customer with the id
+      // not found convenio with the id
       result({ kind: 'not_found' }, null);
       return;
     }
-
     console.log('deleted convenio  with codigo: ', id);
     result(null, res);
   });

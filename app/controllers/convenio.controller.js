@@ -85,7 +85,7 @@ exports.findOne = (req, res, next) => {
   }
 };
 
-//delete//delete  03/07/2021
+//delete  03/07/2021
 exports.delete = (req, res, next) => {
   try {
     Convenio.remove(req.params.convenioId, (err, data) => {

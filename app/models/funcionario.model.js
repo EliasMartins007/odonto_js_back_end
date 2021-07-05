@@ -20,7 +20,7 @@ const Funcionario = function (funcionario) {
   this.observacoes = funcionario.observacoes;
   this.ultimoacesso = funcionario.ultimoacesso;
   this.ativo = funcionario.ativo;
-  this.this.codigo_consultorio = funcionario.codigo_consultorio; // FK tenho que verificar 11/06/2021
+  this.codigo_consultorio = funcionario.codigo_consultorio; // FK tenho que verificar 11/06/2021
   this.data_cadastro = new Date();
   this.data_atualizacao = new Date();
 };
@@ -40,14 +40,17 @@ const Funcionario = function (funcionario) {
 Funcionario.creatfuncionario = (newfuncionario, result) => {
   sql.query(
     `INSERT INTO funcionarios
-    (nome, cpf, estadocivil, codigo_consultorio)
+    (nome, cpf, estadocivil, funcao1, email)
     VALUES
-    (?, ?, ?, ?)`,
+    (?, ?, ?, ?, ?)`,
     [
+      //(nome, cpf, estadocivil, codigo_consultorio)    (?, ?, ?, ?)`,
       newfuncionario.nome,
       newfuncionario.cpf,
       newfuncionario.estadocivil,
-      newfuncionario.codigo_consultorio,
+      //newfuncionario.codigo_consultorio,
+      newfuncionario.funcao1,
+      newfuncionario.email,
     ],
     function (err, res) {
       if (err) {
@@ -55,17 +58,12 @@ Funcionario.creatfuncionario = (newfuncionario, result) => {
         result(err, null);
       } else {
         console.log(res.insertId);
-        result(null, res.insertId);
+        // result(null, res.insertId); // original
+        result(null, { id: res.insertId, ...newfuncionario }); //04/07/2021
       }
     }
   );
 };
-
-/* `INSERT INTO estoque
-   (descricao, quantidade)
-   VALUES
-   (?, ?)`,
-    [funcionario.descricao, funcionario.quantidade] */
 
 Funcionario.getAllfuncionario = function (result) {
   sql.query('Select * from funcionarios', function (err, res) {
@@ -198,4 +196,21 @@ Funcionario.findById = (funcionarioId, result) => {
 };
 //fim teste busca unica
 //asyn await por enquanto gerando erro no console !!!
+//delete 04/07/2021
+Funcionario.remove = (id, result) => {
+  sql.query('DELETE FROM funcionarios WHERE  codigo = ?', id, (err, res) => {
+    if (err) {
+      console.log('error: ', err);
+      result(null, err);
+      return;
+    }
+    if (res.affectedRows == 0) {
+      // not found funcionario with the id
+      result({ kind: 'not_found' }, null);
+      return;
+    }
+    console.log('deleted funcionario  with codigo: ', id);
+    result(null, res);
+  });
+};
 module.exports = Funcionario;

@@ -174,4 +174,21 @@ Procedimento.findById2021 = ({ procedimentoId }, result) => {
 };
 //fim teste busca unica silvio
 
+//delete 04/07/2021
+Procedimento.remove = (id, result) => {
+  sql.query('DELETE FROM procedimento WHERE  codigo = ?', id, (err, res) => {
+    if (err) {
+      console.log('error: ', err);
+      result(null, err);
+      return;
+    }
+    if (res.affectedRows == 0) {
+      // not found procedimento with the id
+      result({ kind: 'not_found' }, null);
+      return;
+    }
+    console.log('deleted procedimento with codigo: ', id);
+    result(null, res);
+  });
+};
 module.exports = Procedimento;

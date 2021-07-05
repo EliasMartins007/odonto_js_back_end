@@ -1,28 +1,31 @@
 const Funcionario = require('../models/funcionario.model.js');
 
-//original
-// exports.create_a_produto = function (req, res) {
-//   let new_produto = new Produto(req.body);
+// exports.create_a_funcionario = (req, res, next) => {
+//   try {
+//     let new_funcionario = new Funcionario(req.body);
 
-//   //handles null error
-//   if (!new_produto.descricao) {
-//     res
-//       .status(400)
-//       .send({ error: true, message: 'please provide produto/descricao' });
-//   } else {
-//     Produto.creatProduto(new_produto, function (err, produto) {
-//       if (err)
-//         //apenas uma linha sem {}
-//         res.send(err);
-//       res.json(produto);
-//     });
+//     //handles null error
+//     if (!new_funcionario.nome) {
+//       res
+//         .status(400)
+//         .send({ error: true, message: 'please provide funcionario/nome' });
+//     } else {
+//       Funcionario.creatfuncionario(new_funcionario, (err, funcionario) => {
+//         if (err)
+//           //apenas uma linha sem {}
+//           res.send(err);
+//         res.json(funcionario);
+//       });
+//     }
+//   } catch (err) {
+//     console.log({ error: true, message: err.message });
+//     next(err);
 //   }
 // };
-//fim
+//  mudar para create async 04/07/2021 testar
 exports.create_a_funcionario = (req, res, next) => {
   try {
     let new_funcionario = new Funcionario(req.body);
-
     //handles null error
     if (!new_funcionario.nome) {
       res
@@ -33,7 +36,8 @@ exports.create_a_funcionario = (req, res, next) => {
         if (err)
           //apenas uma linha sem {}
           res.send(err);
-        res.json(funcionario);
+        //res.json(funcionario ); //original
+        res.json({ funcionario });
       });
     }
   } catch (err) {
@@ -41,26 +45,6 @@ exports.create_a_funcionario = (req, res, next) => {
     next(err);
   }
 };
-// // create async
-// exports.create_a_produto = async (req, res) => {
-//   //let new_produto = new Produto(req.body);
-//   const {descricao, quantidade,
-//     this.quantidade = produto.quantidade;
-//     this.codigo_consultorio} = new Produto(req.body);
-//   //handles null error
-//   if (!new_produto.descricao) {
-//     res
-//       .status(400)
-//       .send({ error: true, message: 'please provide produto/descricao' });
-//   } else {
-//     Produto.creatProduto(new_produto, function (err, produto) {
-//       if (err)
-//         //apenas uma linha sem {}
-//         res.send(err);
-//       res.json(produto);
-//     });
-//   }
-// };
 // //fi create async
 
 exports.list_all_funcionario = function (req, res) {
@@ -155,6 +139,36 @@ exports.findOne = (req, res, next) => {
     });
   } catch (err) {
     console.log({ error: true, message: err.message });
+    next(err);
+  }
+};
+
+//delete 04/07/2021
+exports.delete = async (req, res, next) => {
+  try {
+    const new_funcionario = await Funcionario.remove(
+      req.params.funcionarioId,
+      (err, data) => {
+        if (err) {
+          if (err.kind === 'not_found') {
+            res.status(404).send({
+              message: `NOT found funcionario with id ${req.params.funcionarioId}.`,
+            });
+          } else {
+            res.status(500).send({
+              message: `Could not delete funcionario whit id ${req.params.funcionarioId}`,
+            });
+          }
+        } else {
+          res.send({
+            message: 'funcionario deleted successfully!!!',
+            new_funcionario,
+          }); //04/07/2021
+        }
+      }
+    );
+  } catch (err) {
+    console.log('erro delete controller', err);
     next(err);
   }
 };
