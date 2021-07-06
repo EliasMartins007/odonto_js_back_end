@@ -14,13 +14,15 @@ exports.create_a_procedimento = (req, res, next) => {
         .send({ error: true, message: 'Informar procedimento/nome' });
     } else {
       Procedimento.creatProcedimento(new_procedimento, (err, procedimento) => {
-        if (err)
-          //apenas uma linha sem {}
-          res.send(err);
+        if (err) res.send(err);
 
         //res.json(procedimento); // original
         //silvio17/06/2021
-        res.json({ procedimento });
+        res.json({ procedimento }); //05/07/2021 comentado estava funcionando
+        // //teste 05/07/2021
+        // let jsonServico = JSON.parse(procedimento);
+        // res.json(jsonServico);
+        // //fim teste 05/07/2021
       });
     }
   } catch (err) {

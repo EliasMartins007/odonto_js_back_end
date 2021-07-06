@@ -17,6 +17,7 @@ const Funcionario = function (funcionario) {
   this.funcao1 = funcionario.funcao1;
   this.admissao = funcionario.admissao;
   this.demissao = funcionario.demissao;
+  this.procedimento = funcionario.procedimento; //05/07/2021
   this.observacoes = funcionario.observacoes;
   this.ultimoacesso = funcionario.ultimoacesso;
   this.ativo = funcionario.ativo;
