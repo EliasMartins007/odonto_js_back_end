@@ -1,23 +1,29 @@
 const Horario_referencia = require('../models/horario_referencia.model.js');
 
 //original
+//CRIAÇÃO NOVO HORARIO
+//(POST)
 exports.create_a_horario_referencia = function (req, res) {
-  let new_horario_referencia = new Horario_referencia(req.body);
+  try {
+    let new_horario_referencia = new Horario_referencia(req.body);
 
-  //handles null error
-  if (!new_horario_referencia.codigo) {
-    res.status(400).send({
-      error: true,
-      message: 'please provide horario_referenciao/codigo',
-    });
-  } else {
-    Horario_referencia.creatHorario_referencia(
-      new_horario_referencia,
-      function (err, horario_referencia) {
-        if (err) res.send(err);
-        res.json(horario_referencia);
-      }
-    );
+    //handles null error
+    if (!new_horario_referencia.codigo) {
+      res.status(400).send({
+        error: true,
+        message: 'please provide horario_referenciao/codigo',
+      });
+    } else {
+      Horario_referencia.creatHorario_referencia(
+        new_horario_referencia,
+        function (err, horario_referencia) {
+          if (err) res.send(err);
+          res.json(horario_referencia);
+        }
+      );
+    }
+  } catch (err) {
+    console.log({ error: true, message: err.message });
   }
 };
 
@@ -41,6 +47,8 @@ exports.list_all_horario_referencia = function (req, res) {
   }
 };
 
+//BUSCA TODOS OS HORARIO
+//(GET)
 exports.findAll = (req, res, next) => {
   //adicionei next 11/06/2021
   try {
@@ -49,7 +57,10 @@ exports.findAll = (req, res, next) => {
         res.status(500).send({
           message: err.message || 'Some error occurred horario_referencia.',
         });
-      else res.send(data);
+      else {
+        //res.send(data);} original 07/07/2021
+        res.json({ error: false, Horario: data }); //07/07/2021
+      }
     });
   } catch (err) {
     console.log({ error: true, message: err.message });
@@ -57,6 +68,8 @@ exports.findAll = (req, res, next) => {
   }
 };
 
+//BUSCA HORARIO UNICO
+//(GET)
 exports.findOne = (req, res, next) => {
   try {
     Horario_referencia.findById(
@@ -74,7 +87,10 @@ exports.findOne = (req, res, next) => {
                 req.params.horario_referenciaId,
             });
           }
-        } else res.send(data); //res.json(data); ou //res.send(data); os dois funcionam
+        } else {
+          //res.send(data); //res.json(data); ou //res.send(data); os dois funcionam
+          res.json({ error: false, Horario: data }); //07/07/2021
+        }
       }
     );
   } catch (err) {

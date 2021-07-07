@@ -69,7 +69,8 @@ Horario.getAll = (result) => {
 //teste asyn
 Horario.findById = (horarioId, result) => {
   sql.query(
-    `SELECT * FROM horario_referencia WHERE codigo = ${horarioId}`,
+    `SELECT * FROM horario_referencia WHERE codigo = ?`,
+    horarioId, //07/07/2021
     (err, res) => {
       if (err) {
         console.log('error: ', err);
@@ -78,7 +79,7 @@ Horario.findById = (horarioId, result) => {
       }
 
       if (res.length) {
-        console.log('found horario: ', res[0]);
+        console.log('horario: ', res[0]);
         result(null, res[0]);
         return;
       }

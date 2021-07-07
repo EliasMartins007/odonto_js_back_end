@@ -42,9 +42,9 @@ require('./app/routes/usuario.routes.js')(app); //ok get
 require('./app/routes/funcionario.routes.js')(app); //ok get
 require('./app/routes/paciente.routes.js')(app); // ok get
 
-//fim teste 20/06/2021
-//require('./app/routes/horario_referencia.routes.js')(app); //ok get
-// //fim teste
+//teste 07/07/2021
+require('./app/routes/horario_referencia.routes.js')(app); //ok get
+// //fim teste 07/07/2021
 
 //teste Router 20/06/2021
 //app.use(OdontoRouter);
