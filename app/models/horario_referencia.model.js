@@ -17,10 +17,12 @@ const Horario = function (horario) {
 Horario.creatHorario_referencia = (newHorario, result) => {
   sql.query(
     `INSERT INTO horario_referencia
-    (codigo_paciente , codigo_funcionario, valor_servico, obs)
+    (data_atendimento , hora_atendimento, codigo_paciente, codigo_funcionario, valor_servico, obs)
     VALUES
-    (?, ?, ?, ?)`,
+    (?, ?, ?, ?, ?, ?)`,
     [
+      newHorario.data_atendimento,
+      newHorario.hora_atendimento,
       newHorario.codigo_paciente,
       newHorario.codigo_funcionario,
       newHorario.valor_servico,
@@ -28,13 +30,12 @@ Horario.creatHorario_referencia = (newHorario, result) => {
     ],
     function (err, res) {
       if (err) {
-        console.log('error:', err); //err.message ???
+        console.log('error:', err);
         result(err, null);
       } else {
-        //console.log(res.insertId); //original 14/06/2021
         console.log(res.insertId);
         //result(null, res.insertId); // original
-        result(null, { id: res.insertId, ...newProduto }); //teste outro tutoria 14/06/2021  ok
+        result(null, { id: res.insertId, ...newHorario }); //teste outro tutoria 14/06/2021  ok
       }
     }
   );
@@ -79,9 +80,19 @@ Horario.findById = (horarioId, result) => {
       }
 
       if (res.length) {
+        //original
         console.log('horario: ', res[0]);
         result(null, res[0]);
         return;
+        //
+        //teste 08/07/2021
+        // const obj = JSON.parse(result(null, res[0])); //08/07
+        // console.log(obj); //08/07
+        // // console.log('horario: ', res[0]);
+        // // result(null, res[0]);
+        // return;
+        //deu erro
+        //fim teste 08/07/2021
       }
 
       // not found Horario with the id
@@ -91,4 +102,26 @@ Horario.findById = (horarioId, result) => {
 };
 //fim teste busca unica
 //asyn await por enquanto gerando erro no console !!!
+
+//remove 08/07/2021
+Horario.remove = (id, result) => {
+  sql.query(
+    'DELETE FROM horario_referencia WHERE  codigo = ?',
+    id,
+    (err, res) => {
+      if (err) {
+        console.log('error: ', err);
+        result(null, err);
+        return;
+      }
+      if (res.affectedRows == 0) {
+        //not found horario id
+        result({ kind: 'not_found' }, null);
+        return;
+      }
+      console.log('deleted horario codigo:', id);
+      result(null, res);
+    }
+  );
+};
 module.exports = Horario;

@@ -214,18 +214,23 @@ exports.update = (req, res) => {
   }
 };
 //delete
-exports.delete = (req, res) => {
-  Produto.remove(req.params.produtoId, (err, data) => {
-    if (err) {
-      if (err.kind === 'not_found') {
-        res.status(404).send({
-          message: `Not found produto with id ${req.params.produtoId}.`,
-        });
-      } else {
-        res.status(500).send({
-          message: 'Could not delete Produto with id ' + req.params.produtoId,
-        });
-      }
-    } else res.send({ message: `Produto deleted successfully!!!` });
-  });
+exports.delete = (req, res, next) => {
+  try {
+    Produto.remove(req.params.produtoId, (err, data) => {
+      if (err) {
+        if (err.kind === 'not_found') {
+          res.status(404).send({
+            message: `Not found produto with id ${req.params.produtoId}.`,
+          });
+        } else {
+          res.status(500).send({
+            message: 'Could not delete Produto with id ' + req.params.produtoId,
+          });
+        }
+      } else res.send({ message: `Produto deleted successfully!!!` });
+    });
+  } catch (err) {
+    console.log({ error: true, message: err.message });
+    next(err); //08/07/2021
+  }
 };

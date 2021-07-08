@@ -3,15 +3,17 @@ const Horario_referencia = require('../models/horario_referencia.model.js');
 //original
 //CRIAÇÃO NOVO HORARIO
 //(POST)
-exports.create_a_horario_referencia = function (req, res) {
+//exports.create_a_horario_referencia = function (req, res) { 08/078
+exports.create_a_horario_referencia = (req, res, next) => {
   try {
-    let new_horario_referencia = new Horario_referencia(req.body);
+    let new_horario_referencia = new Horario_referencia(req.body); //campos da minha requisição de inclusão de novo registro
 
     //handles null error
-    if (!new_horario_referencia.codigo) {
+    if (!new_horario_referencia.hora_atendimento) {
+      //alterar para data_atendimento 08/07/2021
       res.status(400).send({
         error: true,
-        message: 'please provide horario_referenciao/codigo',
+        message: 'please provide horario_referencia/codigo !!!',
       });
     } else {
       Horario_referencia.creatHorario_referencia(
@@ -24,26 +26,7 @@ exports.create_a_horario_referencia = function (req, res) {
     }
   } catch (err) {
     console.log({ error: true, message: err.message });
-  }
-};
-
-exports.list_all_horario_referencia = function (req, res) {
-  try {
-    Horario_referencia.getAllHorario_referencia(function (
-      err,
-      horario_referencia
-    ) {
-      //chama getAll da model
-      console.log('controller');
-      if (err) {
-        res.send(err);
-        console.log('res', horario_referencia);
-      }
-      res.send(horario_referencia);
-    });
-  } catch (err) {
-    console.log(err.message);
-    res.json({ error: true, message: err.message });
+    next(err); //08/07/2021
   }
 };
 
@@ -72,7 +55,9 @@ exports.findAll = (req, res, next) => {
 //(GET)
 exports.findOne = (req, res, next) => {
   try {
-    Horario_referencia.findById(
+    //Horario_referencia.findById(
+    const horario = Horario_referencia.findById(
+      //08/07/2021
       req.params.horario_referenciaId,
       (err, data) => {
         if (err) {
@@ -90,11 +75,37 @@ exports.findOne = (req, res, next) => {
         } else {
           //res.send(data); //res.json(data); ou //res.send(data); os dois funcionam
           res.json({ error: false, Horario: data }); //07/07/2021
+          // console.log(horario); //08/7/2021
+          // res.json({ horario }); //08/07/2021
         }
       }
     );
   } catch (err) {
     console.log({ error: true, message: err.message });
     next(err);
+  }
+};
+
+//UPDATE
+//
+//DELETE 08/07/2021
+exports.delete = (req, res, next) => {
+  try {
+    Horario_referencia.remove(req.params.horarioId, (err, data) => {
+      if (err) {
+        if (err.kind === 'not_found') {
+          res.status(404).send({
+            message: `Not found Horario width id ${req.params.horarioId}.`,
+          });
+        } else {
+          res.status(500).send({
+            message: ` Could not delete Horario with id ${req.params.horarioId}`,
+          });
+        }
+      } else res.send({ message: `Horario deleted successfully!!!` });
+    });
+  } catch (err) {
+    console.log(err.message);
+    next(err); //08/07/2021
   }
 };

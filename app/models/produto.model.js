@@ -9,19 +9,7 @@ const Produto = function (produto) {
   this.data_cadastro = new Date();
   this.data_atualizacao = new Date();
 };
-// //original
-// Produto.creatProduto = function (newProduto, result) {
-//   sql.query('INSERT INTO produtos set ?', newProduto, function (err, res) {
-//     if (err) {
-//       console.log('error:', err); //err.message ???
-//       result(err, null);
-//     } else {
-//       console.log(res.insertId);
-//       result(null, res.insertId);
-//     }
-//   });
-// };
-//fim
+
 Produto.creatProduto = (newProduto, result) => {
   sql.query(
     `INSERT INTO produtos
@@ -36,10 +24,9 @@ Produto.creatProduto = (newProduto, result) => {
     ],
     function (err, res) {
       if (err) {
-        console.log('error:', err); //err.message ???
+        console.log('error:', err);
         result(err, null);
       } else {
-        //console.log(res.insertId); //original 14/06/2021
         console.log(res.insertId);
         //result(null, res.insertId); // original
         result(null, { id: res.insertId, ...newProduto }); //teste outro tutoria 14/06/2021  ok

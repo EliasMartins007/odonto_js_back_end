@@ -10,10 +10,17 @@ module.exports = function (app) {
   app.get('/odonto/procedimentos', procedimento.findAll);
 
   //busca unico
-  //(GET): localhost:3009/odonto/:funcionarioId
+  //(GET): localhost:3009/odonto/:procedimentoId
   // app.get('/odonto/procedimento/:procedimentoId', procedimento.findOne);
   //teste obj a terminar 18/06/2021
   app.get('/odonto/procedimento/:procedimentoId', procedimento.findOne2021);
+
+  //para componente funcionario 07/07/2021
+  app.get('/odonto/procedimentoFuncionario', procedimento.findOneFuncionario);
+  // app.get(
+  //   '/odonto/procedimentoFuncionario/:procedimentoId',
+  //   procedimento.findOneFuncionario
+  // );
 
   //04/07/2021
   //delete

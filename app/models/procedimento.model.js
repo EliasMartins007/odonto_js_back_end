@@ -174,6 +174,32 @@ Procedimento.findById2021 = ({ procedimentoId }, result) => {
 };
 //fim teste busca unica silvio
 
+//teste component funcionario 07/07/2021
+Procedimento.findByIdFuncionario = async (procedimentoId, result) => {
+  //`SELECT * FROM procedimento WHERE codigo = ${procedimentoId}`, //original
+  sql.query(
+    'SELECT * FROM procedimento WHERE codigo = ?',
+    procedimentoId,
+    (err, res) => {
+      if (err) {
+        console.log('error: ', err);
+        result(err, null);
+        return;
+      }
+
+      if (res.length) {
+        console.log('Procedimento: ', res[0]);
+        result(null, res[0]);
+        return;
+      }
+
+      // not found Procedimento with the id
+      result({ kind: 'not_found' }, null);
+    }
+  );
+};
+//fim07/07/2021
+
 //delete 04/07/2021
 Procedimento.remove = (id, result) => {
   sql.query('DELETE FROM procedimento WHERE  codigo = ?', id, (err, res) => {

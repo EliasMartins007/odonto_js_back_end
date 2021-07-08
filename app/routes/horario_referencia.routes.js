@@ -16,6 +16,6 @@ module.exports = function (app) {
   //(PUT) atualização de horario
   // app.put('/odonto/horario/:horario_referenciaId', horario_referencia.update_a_horario_referencia );
 
-  //(DELETE) delete um horario
-  // app.delete('/odonto/horario/:horario_referenciaId', horario_referencia.delete);
+  //(DELETE) delete um horario 08/07/2021
+  app.delete('/odonto/horario/:horarioId', horario_referencia.delete);
 };
