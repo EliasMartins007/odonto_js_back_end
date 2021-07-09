@@ -40,12 +40,13 @@ Paciente.creatpaciente = (newpaciente, result) => {
   //(nome, cpf, telefone1, procedimento, codigo_consultorio) 22/06/2021  14 campos no reducer
   sql.query(
     `INSERT INTO pacientes
-    (nome, cpf, telefone1, procedimento, codigo_consultorio)
+    (nome, cpf, sexo, telefone1, procedimento, codigo_consultorio)
     VALUES
-    (?, ?, ?, ?, ?)`,
+    (?, ?, ?, ?, ?, ?)`,
     [
       newpaciente.nome,
       newpaciente.cpf,
+      newpaciente.sexo,
       newpaciente.telefone1,
       newpaciente.procedimento,
       newpaciente.codigo_consultorio,

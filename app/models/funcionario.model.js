@@ -19,6 +19,8 @@ const Funcionario = function (funcionario) {
   this.demissao = funcionario.demissao;
   this.procedimento = funcionario.procedimento; //05/07/2021
   this.observacoes = funcionario.observacoes;
+  this.login = funcionario.login; //09/07/2021
+  this.senha = funcionario.senha; //09/07/2021
   this.ultimoacesso = funcionario.ultimoacesso;
   this.ativo = funcionario.ativo;
   this.codigo_consultorio = funcionario.codigo_consultorio; // FK tenho que verificar 11/06/2021
@@ -41,9 +43,9 @@ const Funcionario = function (funcionario) {
 Funcionario.creatfuncionario = (newfuncionario, result) => {
   sql.query(
     `INSERT INTO funcionarios
-    (nome, cpf, estadocivil, funcao1, email)
+    (nome, cpf, estadocivil, funcao1, email, login, senha)
     VALUES
-    (?, ?, ?, ?, ?)`,
+    (?, ?, ?, ?, ?, ?, ?)`,
     [
       //(nome, cpf, estadocivil, codigo_consultorio)    (?, ?, ?, ?)`,
       newfuncionario.nome,
@@ -52,6 +54,8 @@ Funcionario.creatfuncionario = (newfuncionario, result) => {
       //newfuncionario.codigo_consultorio,
       newfuncionario.funcao1,
       newfuncionario.email,
+      newfuncionario.login,
+      newfuncionario.senha,
     ],
     function (err, res) {
       if (err) {

@@ -6,6 +6,7 @@ const Produto = function (produto) {
   this.quantidade = produto.quantidade;
   this.codigo_consultorio = produto.codigo_consultorio; // FK tenho que verificar 11/06/2021
   this.observacoes = produto.observacoes; //01/07/2021
+  this.valor_produto = produto.valor_produto; //08/07/2021
   this.data_cadastro = new Date();
   this.data_atualizacao = new Date();
 };
@@ -13,14 +14,15 @@ const Produto = function (produto) {
 Produto.creatProduto = (newProduto, result) => {
   sql.query(
     `INSERT INTO produtos
-    (descricao, quantidade, observacoes)
+    (descricao, quantidade, observacoes, valor_produto)
     VALUES
-    (?, ?, ?)`, //(descricao, quantidade, codigo_consultorio, observacoes) (?, ?, ?, ?)` 01/07/2021
+    (?, ?, ?, ?)`, //(descricao, quantidade, codigo_consultorio, observacoes) (?, ?, ?, ?)` 01/07/2021
     [
       newProduto.descricao,
       newProduto.quantidade,
       // newProduto.codigo_consultorio,
       newProduto.observacoes,
+      newProduto.valor_produto,
     ],
     function (err, res) {
       if (err) {
