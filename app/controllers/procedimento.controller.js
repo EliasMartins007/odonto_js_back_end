@@ -188,11 +188,11 @@ exports.findOne2021 = async (req, res, next) => {
 };
 
 //teste funcionario 07/07/2021
-exports.findOneFuncionario = (req, res, next) => {
+exports.findFuncionario = (req, res, next) => {
   try {
     // const { procedimento } = Procedimento.findByIdFuncionario(
     // Procedimento.findByIdFuncionario(req.params.procedimentoId, (err, data) => {
-    const procedimentoId = Procedimento.getAll((err, data) => {
+    const procedimentoId = Procedimento.getAllFuncionarios((err, data) => {
       if (err) {
         if (err.kind === 'not_found') {
           res.status(404).send({
@@ -206,8 +206,13 @@ exports.findOneFuncionario = (req, res, next) => {
           });
         }
       } else {
-        // res.send(data); 07/07/2021
-        res.json({ error: false, Procedimento: data });
+        //res.send(data.Procedimento); // 07/07/2021
+        //console.log(procedimentoId.data);
+        // data.toArray();
+        // res.json({ error: false, Procedimento: data }); //10/07/2021
+        res.json(data); //11/07/2021 retorna array
+        console.log('somente array');
+        console.log(data); //11/07/2021
         // res.json({
         //   Procedimento: procedimentoId.map((s) => ({
         //     label: s.nome,
@@ -247,6 +252,40 @@ exports.findOneFuncionario = (req, res, next) => {
 // };
 
 ///fim teste func 07/07/2021
+
+//update 11/07/2021
+exports.update = (req, res) => {
+  // Validate Request
+  if (!req.body) {
+    res.status(400).send({
+      message: 'Content can not be empty!',
+    });
+  }
+  try {
+    Procedimento.updateById(
+      req.params.procedimentoId,
+      new Procedimento(req.body),
+      (err, data) => {
+        if (err) {
+          if (err.kind === 'not_found') {
+            res.status(404).send({
+              message: `Not found procedimento with id ${req.params.procedimentoId}.`,
+            });
+          } else {
+            res.status(500).send({
+              message:
+                'Error updating procedimento with id ' +
+                req.params.procedimentoId,
+            });
+          }
+        } else res.send(data);
+      }
+    );
+  } catch (err) {
+    console.log({ error: true, message: err.message });
+  }
+};
+
 //delete//delete  04/07/2021  teste async olhar se esta certo !!!
 exports.delete = async (req, res, next) => {
   try {
@@ -274,28 +313,3 @@ exports.delete = async (req, res, next) => {
     next(err); //04/07/2021
   }
 };
-//metodo original
-// exports.delete = (req, res, next) => {
-//   try {
-//      Procedimento.remove(req.params.procedimentoId, (err, data) => {
-//         if (err) {
-//           if (err.kind === 'not_found') {
-//             res.status(404).send({
-//               message: `Not found Procedimeno with id ${req.params.procedimentoId}.`,
-//             });
-//           } else {
-//             res.status(500).send({
-//               message:
-//                 'Could not delete Procedimeno  with id ' +
-//                 req.params.procedimentoId,
-//             });
-//           }
-//         } else
-//           res.send({ message: `Procedimeno  deleted successfully!!!`});
-//       }
-//     );
-//   } catch (err) {
-//     console.log(err);
-//     next(err); //04/07/2021
-//   }
-// };

@@ -181,11 +181,11 @@ Produto.findById = (produtoId, result) => {
 Produto.updateById = (id, produtoId, result) => {
   try {
     sql.query(
-      'UPDATE produtos SET descricao = ?, quantidade= ?, codigo_consultorio= ? WHERE codigo = ?',
+      'UPDATE produtos SET descricao = ?, quantidade= ?, valor_produto = ? WHERE codigo = ?',
       [
         produtoId.descricao,
         produtoId.quantidade,
-        produtoId.codigo_consultorio,
+        produtoId.valor_produto,
         //   consultorioId.data_atualizaçao.Date.now(), verificar campo atualização
         id,
       ],

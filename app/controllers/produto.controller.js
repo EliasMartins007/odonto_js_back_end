@@ -133,28 +133,6 @@ exports.findAll = (req, res, next) => {
   }
 };
 
-//busca unica // tenho que add async await!!!
-// exports.findOne = (req, res, next) => {
-//   try {
-//     Produto.findById(req.params.produtoId, (err, data) => {
-//       if (err) {
-//         if (err.kind === 'not_found') {
-//           res.status(404).send({
-//             message: `Not found Produto with id ${req.params.produtoId}.`,
-//           });
-//         } else {
-//           res.status(500).send({
-//             message: 'Error retrieving Produto with id ' + req.params.produtoId,
-//           });
-//         }
-//       } else res.send(data); //res.json(data); ou //res.send(data); os dois funcionam
-//     });
-//   } catch (err) {
-//     console.log({ error: true, message: err.message });
-//     next(err);
-//   }
-// };
-//teste 14/06/2021
 exports.findOne = (req, res, next) => {
   try {
     Produto.findById(req.params.produtoId, (err, data) => {

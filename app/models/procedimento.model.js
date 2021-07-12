@@ -188,9 +188,15 @@ Procedimento.findByIdFuncionario = async (procedimentoId, result) => {
       }
 
       if (res.length) {
-        console.log('Procedimento: ', res[0]);
-        result(null, res[0]);
-        return;
+        // console.log('Procedimento: ', res[0]);
+        // result(null, res[0]);
+        // return;
+        //10/07/2021
+        let finalArray = new Array();
+        for (var k in procedimentoId) {
+          finalArray.push(procedimentoId[k]);
+          console.log(finalArray);
+        }
       }
 
       // not found Procedimento with the id
@@ -198,8 +204,66 @@ Procedimento.findByIdFuncionario = async (procedimentoId, result) => {
     }
   );
 };
+
+//varios10/07/2021
+Procedimento.getAllFuncionarios = (result) => {
+  // sql.query('SELECT * FROM procedimento', (err, res) => { // original alterei para obj 23/06/2021
+  const procedimento = sql.query('SELECT * FROM procedimento', (err, res) => {
+    if (err) {
+      console.log('error: ', err);
+      result(null, err);
+      return;
+    }
+
+    console.log('procedimento: ', res); //trazendo resultado 11/07/2021
+    // result(res.toArray());
+    // console.log('procedimento', res); //11/07/2021
+    // console.log('procedimento', procedimento); //11/07/2021
+
+    result(null, res);
+    // return { procedimento }; //23/06/2021 não solucionou a questão de undefined
+    //10/07/2021 outra forma
+    //console.log('procedimento: ', res);
+    // let finalArray = new Array();
+    // for (var k in procedimento) {
+    //   finalArray.push(procedimento[k]);
+    //   console.log(finalArray);
+    // }
+  });
+};
 //fim07/07/2021
 
+//UPDATE 11/07/2021
+Procedimento.updateById = (id, procedimentoId, result) => {
+  sql.query(
+    'UPDATE procedimento SET nome = ?, valor_procedimento= ?, tipo = ?, obs = ? WHERE codigo = ?',
+    [
+      procedimentoId.nome,
+      procedimentoId.valor_procedimento,
+      procedimentoId.tipo,
+      procedimentoId.obs,
+      //   procedimentoId.data_atualizaçao.Date.now(),
+      id,
+    ],
+
+    (err, res) => {
+      if (err) {
+        console.log('error: ', err);
+        result(null, err);
+        return;
+      }
+
+      if (res.affectedRows == 0) {
+        // not found procedimento with the id
+        result({ kind: 'not_found' }, null);
+        return;
+      }
+
+      console.log('updated procedimento: ', { id: id, ...procedimentoId });
+      result(null, { id: id, ...procedimentoId });
+    }
+  );
+};
 //delete 04/07/2021
 Procedimento.remove = (id, result) => {
   sql.query('DELETE FROM procedimento WHERE  codigo = ?', id, (err, res) => {

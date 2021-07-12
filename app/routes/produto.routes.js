@@ -22,7 +22,7 @@ module.exports = function (app) {
 
   //atualização
   //(PUT) : localhost:3009/odonto/:produtoId
-  app.put('/odonto/produto/:produtoId', produto.update);
+  app.put('/odonto/produto/:produtoId', produto.update); //11/07/2021
 
   //delete
   //(DELETE) : localhost:3009/odonto/:produtoId
@@ -30,15 +30,6 @@ module.exports = function (app) {
 };
 
 /*
-exporta async
-module.exports = (async function() {
- const client = await MongoClient.connect(url, {
-   useNewUrlParser: true
- });
-
-  const db = client.db(mongo_db);
-  return { client, db };
-})();
 //https://stackoverflow.com/questions/51142495/node-js-async-await-module-export
 */
 

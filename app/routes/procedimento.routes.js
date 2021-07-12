@@ -12,17 +12,19 @@ module.exports = function (app) {
   //busca unico
   //(GET): localhost:3009/odonto/:procedimentoId
   // app.get('/odonto/procedimento/:procedimentoId', procedimento.findOne);
-  //teste obj a terminar 18/06/2021
   app.get('/odonto/procedimento/:procedimentoId', procedimento.findOne2021);
 
   //para componente funcionario 07/07/2021
-  app.get('/odonto/procedimentoFuncionario', procedimento.findOneFuncionario);
+  app.get('/odonto/procedimentoFuncionario', procedimento.findFuncionario);
   // app.get(
   //   '/odonto/procedimentoFuncionario/:procedimentoId',
   //   procedimento.findOneFuncionario
   // );
 
-  //04/07/2021
+  //atualização 11/07/2021
+  //(PUT) : localhost:3009/odonto/:consultorioId
+  app.put('/odonto/procedimento/:procedimentoId', procedimento.update);
+  //
   //delete
   //(DELETE) : localhost:3009/odonto/:procedimentoId
   app.delete('/odonto/procedimento/:procedimentoId', procedimento.delete);
