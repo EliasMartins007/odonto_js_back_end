@@ -43,17 +43,29 @@ const Funcionario = function (funcionario) {
 Funcionario.creatfuncionario = (newfuncionario, result) => {
   sql.query(
     `INSERT INTO funcionarios
-    (nome, cpf, estadocivil, funcao1, email, login, senha)
+    (nome, cpf, rg, estadocivil, endereco,
+     cidade, cep, nascimento, telefone1, celular, sexo,
+     funcao1, email, observacoes, procedimento, login, senha)
     VALUES
-    (?, ?, ?, ?, ?, ?, ?)`,
+    (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
     [
       //(nome, cpf, estadocivil, codigo_consultorio)    (?, ?, ?, ?)`,
       newfuncionario.nome,
       newfuncionario.cpf,
+      newfuncionario.rg, //12/07
       newfuncionario.estadocivil,
+      newfuncionario.endereco, //12/07
+      newfuncionario.cidade, //12/07
+      newfuncionario.cep, //12/07
+      newfuncionario.nascimento, //12/11
+      newfuncionario.telefone1,
+      newfuncionario.celular, //12/11
       //newfuncionario.codigo_consultorio,
+      newfuncionario.sexo, //12/11
       newfuncionario.funcao1,
       newfuncionario.email,
+      newfuncionario.observacoes, //12/11
+      newfuncionario.procedimento, //12/11
       newfuncionario.login,
       newfuncionario.senha,
     ],

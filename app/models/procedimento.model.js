@@ -16,7 +16,7 @@ Procedimento.creatProcedimento = (newProcedimento, result) => {
     `INSERT INTO procedimento
     (nome, valor_procedimento, tipo, obs)
     VALUES
-    ( ?, ?, ?, ?)`, // ( ? ) (nome, valor_procedimento, tipo, obs, codigo_consultorio)
+    ( ?, ?, ?, ?)`,
     [
       newProcedimento.nome,
       newProcedimento.valor_procedimento,
