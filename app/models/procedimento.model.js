@@ -67,34 +67,22 @@ Procedimento.getAllProcedimento = function (result) {
 
 //funcionando 13/06/2021
 
-// Produto.getAll = (result) => {
-//   sql.query('SELECT * FROM produtos', (err, res) => {
-//     if (err) {
-//       console.log('error: ', err);
-//       result(null, err);
-//       return;
-//     }
-
-//     console.log('produto: ', res);
-//     result(null, res);
-//   });
-// };
-
-// teste mudar metodo para async
-//deu certo
+//BUSCA TODOS
 Procedimento.getAll = (result) => {
-  // sql.query('SELECT * FROM procedimento', (err, res) => { // original alterei para obj 23/06/2021
-  const procedimento = sql.query('SELECT * FROM procedimento', (err, res) => {
-    if (err) {
-      console.log('error: ', err);
-      result(null, err);
-      return;
-    }
+  const procedimento = sql.query(
+    'SELECT * FROM procedimento ORDER BY nome ASC',
+    (err, res) => {
+      if (err) {
+        console.log('error: ', err);
+        result(null, err);
+        return;
+      }
 
-    console.log('procedimento: ', res);
-    result(null, res);
-    return { procedimento }; //23/06/2021 não solucionou a questão de undefined
-  });
+      console.log('procedimento: ', res);
+      result(null, res);
+      return { procedimento }; //23/06/2021 não solucionou a questão de undefined
+    }
+  );
 };
 
 //fim teste
@@ -124,9 +112,7 @@ Procedimento.findById = async (procedimentoId, result) => {
   );
 };
 //fim teste busca unica
-//
-//
-//
+
 //busca unica silvio ainda a implementar 18/06/2021
 Procedimento.findById2021 = ({ procedimentoId }, result) => {
   try {
@@ -205,7 +191,7 @@ Procedimento.findByIdFuncionario = async (procedimentoId, result) => {
   );
 };
 
-//varios10/07/2021
+//BUSCA TODOS
 Procedimento.getAllFuncionarios = (result) => {
   // sql.query('SELECT * FROM procedimento', (err, res) => { // original alterei para obj 23/06/2021
   const procedimento = sql.query('SELECT * FROM procedimento', (err, res) => {
@@ -231,7 +217,6 @@ Procedimento.getAllFuncionarios = (result) => {
     // }
   });
 };
-//fim07/07/2021
 
 //UPDATE 11/07/2021
 Procedimento.updateById = (id, procedimentoId, result) => {
@@ -242,7 +227,6 @@ Procedimento.updateById = (id, procedimentoId, result) => {
       procedimentoId.valor_procedimento,
       procedimentoId.tipo,
       procedimentoId.obs,
-      //   procedimentoId.data_atualizaçao.Date.now(),
       id,
     ],
 

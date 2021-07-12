@@ -115,19 +115,22 @@ Funcionario.getAllfuncionario = function (result) {
 //deu certo
 Funcionario.getAll = (result) => {
   // sql.query('SELECT * FROM funcionarios', (err, res) => {
-  const funcionario = sql.query('SELECT * FROM funcionarios', (err, res) => {
-    //teste 24/02021
-    if (err) {
-      console.log('error: ', err);
-      result(null, err);
-      return;
-    }
+  const funcionario = sql.query(
+    'SELECT * FROM funcionarios ORDER BY nome ASC',
+    (err, res) => {
+      //teste 24/02021
+      if (err) {
+        console.log('error: ', err);
+        result(null, err);
+        return;
+      }
 
-    console.log('funcionario: ', res);
-    result(null, res);
-    //teste 24/06/2021 consulta em loop no front end
-    return { funcionario };
-  });
+      console.log('funcionario: ', res);
+      result(null, res);
+      //teste 24/06/2021 consulta em loop no front end
+      return { funcionario };
+    }
+  );
 };
 
 //fim teste

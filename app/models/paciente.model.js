@@ -109,19 +109,22 @@ Paciente.getAllpaciente = function (result) {
 // };
 //teste json
 Paciente.getAll = (result) => {
-  const paciente = sql.query('SELECT * FROM pacientes', (err, res) => {
-    if (err) {
-      console.log('error: ', err);
-      result(null, err);
-      return;
-    }
+  const paciente = sql.query(
+    'SELECT * FROM pacientes ORDER BY nome ASC',
+    (err, res) => {
+      if (err) {
+        console.log('error: ', err);
+        result(null, err);
+        return;
+      }
 
-    console.log('paciente: ', res);
-    result(null, res);
-    //result(null, res.json()); //tenho que mudar retorno para json 22/06/2021
-    //teste 22/06/2021
-    return { paciente };
-  });
+      console.log('paciente: ', res);
+      result(null, res);
+      //result(null, res.json()); //tenho que mudar retorno para json 22/06/2021
+      //teste 22/06/2021
+      return { paciente };
+    }
+  );
 };
 
 //fim teste

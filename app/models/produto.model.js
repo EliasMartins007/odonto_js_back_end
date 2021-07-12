@@ -82,18 +82,21 @@ Produto.getAllProduto = function (result) {
 //deu certo
 Produto.getAll = (result) => {
   try {
-    const produto = sql.query('SELECT * FROM produtos', (err, res) => {
-      if (err) {
-        console.log('error: ', err);
-        result(null, err);
-        return;
-      }
+    const produto = sql.query(
+      'SELECT * FROM produtos ORDER BY descricao ASC',
+      (err, res) => {
+        if (err) {
+          console.log('error: ', err);
+          result(null, err);
+          return;
+        }
 
-      console.log('produto: ', res);
-      result(null, res); //original
-      //teste    result(response); //.status(200).send(response.rows);
-      return { produto };
-    });
+        console.log('produto: ', res);
+        result(null, res); //original
+        //teste    result(response); //.status(200).send(response.rows);
+        return { produto }; //teste elias não tem esse return
+      }
+    );
   } catch (err) {
     console.log({ erro: true, message: error.message });
   }
@@ -133,7 +136,6 @@ Produto.getAll = (result) => {
 //         result(err, null);
 //         return;
 //       }
-
 //       if (res.length) {
 //         console.log('found produto: ', res[0]);
 //         result(null, res[0]);
@@ -145,7 +147,6 @@ Produto.getAll = (result) => {
 //     }
 //   );
 // };
-
 //testando asyn 15/06/2021
 Produto.findById = (produtoId, result) => {
   try {
@@ -173,7 +174,6 @@ Produto.findById = (produtoId, result) => {
     console.log({ erro: true, message: error.message });
   }
 };
-
 //fim teste busca unica
 //asyn await por enquanto gerando erro no console !!!
 
@@ -181,12 +181,12 @@ Produto.findById = (produtoId, result) => {
 Produto.updateById = (id, produtoId, result) => {
   try {
     sql.query(
-      'UPDATE produtos SET descricao = ?, quantidade= ?, valor_produto = ? WHERE codigo = ?',
+      'UPDATE produtos SET descricao = ?, quantidade= ?, valor_produto = ?, observacoes = ? WHERE codigo = ?',
       [
         produtoId.descricao,
         produtoId.quantidade,
         produtoId.valor_produto,
-        //   consultorioId.data_atualizaçao.Date.now(), verificar campo atualização
+        produtoId.observacoes,
         id,
       ],
       (err, res) => {
@@ -210,26 +210,6 @@ Produto.updateById = (id, produtoId, result) => {
     console.log({ error: true, message: err.message });
   }
 };
-//delete
-//original
-// Consultorio.remove = (id, result) => {
-//   sql.query('DELETE FROM consultorio WHERE  codigo = ?', id, (err, res) => {
-//     if (err) {
-//       console.log('error: ', err);
-//       result(null, err);
-//       return;
-//     }
-
-//     if (res.affectedRows == 0) {
-//       // not found Customer with the id
-//       result({ kind: 'not_found' }, null);
-//       return;
-//     }
-
-//     console.log('deleted consultorio with codigo: ', id);
-//     result(null, res);
-//   });
-// };
 //delete
 Produto.remove = (id, result) => {
   sql.query('DELETE FROM produtos WHERE  codigo = ?', id, (err, res) => {

@@ -10,12 +10,12 @@ module.exports = function (app) {
   app.get('/odonto/convenios', convenio.findAll);
   //antes convenio.finAll valido o token  25/06/2021
   //busca unico
-  //(GET): localhost:3009/odonto/:convenioId
+  //(GET): localhost:3009/odonto/convenio/:convenioId
   app.get('/odonto/convenio/:convenioId', convenio.findOne);
 
   //atualização
-  //(PUT) : localhost:3009/odonto/:convenioId
-  // app.put('/odonto/convenio/:convenioId', convenio.update_a_convenio);
+  //(PUT) : localhost:3009/odonto/convenio/:convenioId
+  app.put('/odonto/convenio/:convenioId', convenio.update);
 
   //delete
   //(DELETE) : localhost:3009/odonto/:convenioId

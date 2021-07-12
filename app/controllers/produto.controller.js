@@ -161,7 +161,7 @@ exports.findOne = (req, res, next) => {
 //   );
 //   res.status(200).send(response.rows);
 // };
-//update falta 15/06/2021
+//update
 exports.update = (req, res) => {
   // Validate Request
   if (!req.body) {

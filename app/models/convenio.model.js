@@ -15,13 +15,13 @@ const Convenio = function (convenio) {
   this.data_cadastro = new Date();
   this.data_atualizacao = new Date();
 };
-
+//CRIAÇÃO DE NOVO
 Convenio.creatConvenio = (newConvenio, result) => {
   sql.query(
     `INSERT INTO convenio
-    (nome, razaosocial, telefone1, obs, email, website, banco, agencia, conta, codigo_consultorio )
+    (nome, razaosocial, telefone1, obs, email, website, banco, agencia, conta )
     VALUES
-    (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+    (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
     [
       newConvenio.nome,
       newConvenio.razaosocial,
@@ -32,7 +32,7 @@ Convenio.creatConvenio = (newConvenio, result) => {
       newConvenio.banco,
       newConvenio.agencia,
       newConvenio.conta,
-      newConvenio.codigo_consultorio,
+      //  newConvenio.codigo_consultorio,   , codigo_consultorio )
     ],
 
     function (err, res) {
@@ -59,9 +59,11 @@ Convenio.getAllConvenio = function (result) {
     }
   });
 };
-
+//BUSCA TODOS
 Convenio.getAll = (result) => {
-  sql.query('SELECT * FROM convenio', (err, res) => {
+  //sql.query('SELECT * FROM convenio', (err, res) => {
+  sql.query('SELECT * FROM convenio ORDER BY nome ASC', (err, res) => {
+    //12/07/2021
     if (err) {
       console.log('error: ', err);
       result(null, err);
@@ -95,9 +97,50 @@ Convenio.findById = (convenioId, result) => {
     }
   );
 };
-//fim teste busca unica
-//asyn await por enquanto gerando erro no console !!! devo mudar mysql2/promesys  14/06/2021
-//delete 03/07/2021
+
+//UPDATE
+Convenio.updateById = (id, convenioId, result) => {
+  try {
+    sql.query(
+      // 'UPDATE convenio SET nome = ?, razaosocial = ?, telefone1 = ?, obs = ?, email = ?, website = ?,  quantidade= ?, valor_convenio = ? WHERE codigo = ?',
+      ` UPDATE convenio SET nome = ?, razaosocial = ?,
+        telefone1 = ?, obs = ?, email = ?, website = ?,
+        banco= ?, agencia = ?, conta = ? WHERE codigo = ?`,
+      [
+        convenioId.nome,
+        convenioId.razaosocial,
+        convenioId.telefone1,
+        convenioId.obs,
+        convenioId.email,
+        convenioId.website,
+        convenioId.banco,
+        convenioId.agencia,
+        convenioId.conta,
+
+        id,
+      ],
+      (err, res) => {
+        if (err) {
+          console.log('error: ', err);
+          result(null, err);
+          return;
+        }
+
+        if (res.affectedRows == 0) {
+          // not found Consultorio with the id
+          result({ kind: 'not_found' }, null);
+          return;
+        }
+
+        console.log('updated convenio: ', { id: id, ...convenioId });
+        result(null, { id: id, ...convenioId });
+      }
+    );
+  } catch (err) {
+    console.log({ error: true, message: err.message });
+  }
+};
+//DELETE
 Convenio.remove = (id, result) => {
   sql.query('DELETE FROM convenio WHERE  codigo = ?', id, (err, res) => {
     if (err) {

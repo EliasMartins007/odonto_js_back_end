@@ -84,7 +84,37 @@ exports.findOne = (req, res, next) => {
     next(err);
   }
 };
-
+//update falta 12/07/2021
+exports.update = (req, res) => {
+  // Validate Request
+  if (!req.body) {
+    res.status(400).send({
+      message: 'Content can not be empty!',
+    });
+  }
+  try {
+    Convenio.updateById(
+      req.params.convenioId,
+      new Convenio(req.body),
+      (err, data) => {
+        if (err) {
+          if (err.kind === 'not_found') {
+            res.status(404).send({
+              message: `Not found convenio with id ${req.params.convenioId}.`,
+            });
+          } else {
+            res.status(500).send({
+              message:
+                'Error updating convenio with id ' + req.params.convenioId,
+            });
+          }
+        } else res.send(data);
+      }
+    );
+  } catch (err) {
+    console.log({ error: true, message: err.message });
+  }
+};
 //delete  03/07/2021
 exports.delete = (req, res, next) => {
   try {
