@@ -5,7 +5,7 @@ const Funcionario = function (funcionario) {
   this.nome = funcionario.nome;
   this.cpf = funcionario.cpf;
   this.rg = funcionario.rg;
-  this.estadoCivil = funcionario.estadoCivil;
+  this.estadocivil = funcionario.estadocivil;
   this.endereco = funcionario.endereco;
   this.cidade = funcionario.cidade;
   this.cep = funcionario.cep;
@@ -27,19 +27,7 @@ const Funcionario = function (funcionario) {
   this.data_cadastro = new Date();
   this.data_atualizacao = new Date();
 };
-// //original
-// Funcionario.creatfuncionario = function (newfuncionario, result) {
-//   sql.query('INSERT INTO funcionarios set ?', newfuncionario, function (err, res) {
-//     if (err) {
-//       console.log('error:', err); //err.message ???
-//       result(err, null);
-//     } else {
-//       console.log(res.insertId);
-//       result(null, res.insertId);
-//     }
-//   });
-// };
-//fim
+
 Funcionario.creatfuncionario = (newfuncionario, result) => {
   sql.query(
     `INSERT INTO funcionarios
@@ -108,29 +96,10 @@ Funcionario.getAllfuncionario = function (result) {
 //   });
 // };
 
-//funcionando 13/06/2021
-
-// Funcionario.getAll = (result) => {
-//   sql.query('SELECT * FROM funcionarios', (err, res) => {
-//     if (err) {
-//       console.log('error: ', err);
-//       result(null, err);
-//       return;
-//     }
-
-//     console.log('funcionario: ', res);
-//     result(null, res);
-//   });
-// };
-
-// teste mudar metodo para async
-//deu certo
 Funcionario.getAll = (result) => {
-  // sql.query('SELECT * FROM funcionarios', (err, res) => {
   const funcionario = sql.query(
     'SELECT * FROM funcionarios ORDER BY nome ASC',
     (err, res) => {
-      //teste 24/02021
       if (err) {
         console.log('error: ', err);
         result(null, err);
@@ -145,22 +114,6 @@ Funcionario.getAll = (result) => {
   );
 };
 
-//fim teste
-
-//teste adequar controller para model  funcionou falta ajustes 11/06
-// Funcionario.listAllProducts = async (result) => {
-//   await sql.query('SELECT * FROM funcionarios', (err, res) => {
-//     if (err) {
-//       console.log('error: ', err);
-//       result(null, err);
-//       return;
-//     }
-
-//     console.log('funcionario: ', res);
-//     result(null, res);
-//   });
-// };
-
 // //teste adequar async original do exemplo 11/06/2021
 // exports.listAllProducts = async (req, res) => {
 //   const response = await db.query(
@@ -168,31 +121,6 @@ Funcionario.getAll = (result) => {
 //   );
 //   res.status(200).send(response.rows);
 // };
-
-//busca unica
-// Funcionario.findById = (funcionarioId, result) => {
-//   sql.query(
-//     `SELECT * FROM funcionarios WHERE codigo = ${funcionarioId}`,
-//     (err, res) => {
-//       if (err) {
-//         console.log('error: ', err);
-//         result(err, null);
-//         return;
-//       }
-
-//       if (res.length) {
-//         console.log('found funcionario: ', res[0]);
-//         result(null, res[0]);
-//         return;
-//       }
-
-//       // not found funcionario with the id
-//       result({ kind: 'not_found' }, null);
-//     }
-//   );
-// };
-
-//teste asyn
 Funcionario.findById = (funcionarioId, result) => {
   sql.query(
     `SELECT * FROM funcionarios WHERE codigo = ${funcionarioId}`,
@@ -214,7 +142,69 @@ Funcionario.findById = (funcionarioId, result) => {
     }
   );
 };
-//fim teste busca unica
+//UPDATE 12/07/2021
+Funcionario.updateById = (id, funcionarioId, result) => {
+  try {
+    sql.query(
+      // ` UPDATE convenio SET nome = ?, razaosocial = ?,
+      //   telefone1 = ?, obs = ?, email = ?, website = ?,
+      //   banco= ?, agencia = ?, conta = ? WHERE codigo = ?`,
+
+      ` UPDATE funcionarios SET nome = ?, cpf = ?, rg = ?, estadocivil = ?, endereco = ?, cidade = ?,
+        cep = ?, nascimento = ?, telefone1 = ?, celular = ?, sexo = ?, funcao1 = ?, email = ?,
+        observacoes = ?, procedimento = ?, login = ?, senha = ? WHERE codigo = ?`,
+      [
+        // convenioId.nome,
+        // convenioId.razaosocial,
+        // convenioId.telefone1,
+        // convenioId.obs,
+        // convenioId.email,
+        // convenioId.website,
+        // convenioId.banco,
+        // convenioId.agencia,
+        // convenioId.conta,
+        funcionarioId.nome,
+        funcionarioId.cpf,
+        funcionarioId.rg, //12/07
+        funcionarioId.estadocivil,
+        funcionarioId.endereco, //12/07
+        funcionarioId.cidade, //12/07
+        funcionarioId.cep, //12/07
+        funcionarioId.nascimento, //12/11
+        funcionarioId.telefone1,
+        funcionarioId.celular, //12/11
+        //funcionarioId.codigo_consultorio,
+        funcionarioId.sexo, //12/11
+        funcionarioId.funcao1,
+        funcionarioId.email,
+        funcionarioId.observacoes, //12/11
+        funcionarioId.procedimento, //12/11
+        funcionarioId.login,
+        funcionarioId.senha,
+
+        id,
+      ],
+      (err, res) => {
+        if (err) {
+          console.log('error: ', err);
+          result(null, err);
+          return;
+        }
+
+        if (res.affectedRows == 0) {
+          // not found Funcionario with the id
+          result({ kind: 'not_found' }, null);
+          return;
+        }
+
+        console.log('updated funcionario: ', { id: id, ...funcionarioId });
+        result(null, { id: id, ...funcionarioId });
+      }
+    );
+  } catch (err) {
+    console.log({ error: true, message: err.message });
+  }
+};
 //asyn await por enquanto gerando erro no console !!!
 //delete 04/07/2021
 Funcionario.remove = (id, result) => {

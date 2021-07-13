@@ -3,7 +3,7 @@ module.exports = function (app) {
   // glaucia utili const funcionarioController aki, mas esta gerando erro !! 20/06/2021
   //criação
   //(POST): localhost:3009/odonto/novofuncionario
-  app.post('/odonto/novofuncionario', funcionario.create_a_funcionario); //04/07/2021
+  app.post('/odonto/novofuncionario', funcionario.create_a_funcionario);
 
   // //busca todos
   // //(GET): localhost:3009/odonto/funcionarios
@@ -15,9 +15,9 @@ module.exports = function (app) {
 
   //atualização
   //(PUT) : localhost:3009/odonto/:funcionarioId
-  // app.put('/odonto/funcionario/:funcionarioId', funcionario.update_a_funcionario);
+  app.put('/odonto/funcionario/:funcionarioId', funcionario.update); //12/07/2021
 
   //delete
   //(DELETE) : localhost:3009/odonto/:funcionarioId
-  app.delete('/odonto/funcionario/:funcionarioId', funcionario.delete); //04/07/2021
+  app.delete('/odonto/funcionario/:funcionarioId', funcionario.delete);
 };

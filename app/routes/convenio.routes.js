@@ -8,7 +8,7 @@ module.exports = function (app) {
   //busca todos
   //(GET): localhost:3009/odonto/convenios
   app.get('/odonto/convenios', convenio.findAll);
-  //antes convenio.finAll valido o token  25/06/2021
+  //antes convenio.finAll valido o token midlewares   25/06/2021
   //busca unico
   //(GET): localhost:3009/odonto/convenio/:convenioId
   app.get('/odonto/convenio/:convenioId', convenio.findOne);
