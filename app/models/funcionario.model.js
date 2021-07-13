@@ -95,7 +95,6 @@ Funcionario.getAllfuncionario = function (result) {
 //     }
 //   });
 // };
-
 Funcionario.getAll = (result) => {
   const funcionario = sql.query(
     'SELECT * FROM funcionarios ORDER BY nome ASC',
@@ -113,7 +112,6 @@ Funcionario.getAll = (result) => {
     }
   );
 };
-
 // //teste adequar async original do exemplo 11/06/2021
 // exports.listAllProducts = async (req, res) => {
 //   const response = await db.query(
@@ -136,7 +134,6 @@ Funcionario.findById = (funcionarioId, result) => {
         result(null, res[0]);
         return;
       }
-
       // not found funcionario with the id
       result({ kind: 'not_found' }, null);
     }
@@ -146,23 +143,10 @@ Funcionario.findById = (funcionarioId, result) => {
 Funcionario.updateById = (id, funcionarioId, result) => {
   try {
     sql.query(
-      // ` UPDATE convenio SET nome = ?, razaosocial = ?,
-      //   telefone1 = ?, obs = ?, email = ?, website = ?,
-      //   banco= ?, agencia = ?, conta = ? WHERE codigo = ?`,
-
       ` UPDATE funcionarios SET nome = ?, cpf = ?, rg = ?, estadocivil = ?, endereco = ?, cidade = ?,
         cep = ?, nascimento = ?, telefone1 = ?, celular = ?, sexo = ?, funcao1 = ?, email = ?,
         observacoes = ?, procedimento = ?, login = ?, senha = ? WHERE codigo = ?`,
       [
-        // convenioId.nome,
-        // convenioId.razaosocial,
-        // convenioId.telefone1,
-        // convenioId.obs,
-        // convenioId.email,
-        // convenioId.website,
-        // convenioId.banco,
-        // convenioId.agencia,
-        // convenioId.conta,
         funcionarioId.nome,
         funcionarioId.cpf,
         funcionarioId.rg, //12/07
@@ -190,7 +174,6 @@ Funcionario.updateById = (id, funcionarioId, result) => {
           result(null, err);
           return;
         }
-
         if (res.affectedRows == 0) {
           // not found Funcionario with the id
           result({ kind: 'not_found' }, null);
@@ -205,7 +188,6 @@ Funcionario.updateById = (id, funcionarioId, result) => {
     console.log({ error: true, message: err.message });
   }
 };
-//asyn await por enquanto gerando erro no console !!!
 //delete 04/07/2021
 Funcionario.remove = (id, result) => {
   sql.query('DELETE FROM funcionarios WHERE  codigo = ?', id, (err, res) => {

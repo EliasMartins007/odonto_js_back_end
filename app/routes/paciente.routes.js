@@ -12,12 +12,12 @@ module.exports = function (app) {
   //busca unico
   //(GET): localhost:3009/odonto/:pacienteId
   app.get('/odonto/paciente/:pacienteId', paciente.findOne);
-  //teste 28/06 await
+
   //app.get('/odonto/paciente/:pacienteId', paciente.findOneTeste); //2806/2021
 
   //atualização
   //(PUT) : localhost:3009/odonto/atualizarPaciente
-  // app.put('/odonto/paciente/:pacienteId', paciente.update_a_paciente);
+  app.put('/odonto/paciente/:pacienteId', paciente.update); //12/07/2021
 
   //delete //04/07/2021
   //(DELETE) : localhost:3009/odonto/:pacienteId

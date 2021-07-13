@@ -183,7 +183,55 @@ Paciente.findById = (pacienteId, result) => {
 };
 //fim teste busca unica
 //asyn await por enquanto gerando erro no console !!!
+//UPDASTE PACIENTE 12/07/2021
+Paciente.updateById = (id, pacienteId, result) => {
+  try {
+    sql.query(
+      ` UPDATE pacientes SET nome = ?, cpf = ?, sexo = ?, nascimento = ?, endereco = ?, bairro = ?,
+   cidade = ?, cep = ?, celular = ?,   telefone1 = ?, email = ?,   obs = ?,   procedimento = ?,
+   status = ?, convenio = ? WHERE codigo = ?`,
+      [
+        pacienteId.nome,
+        pacienteId.cpf,
+        pacienteId.sexo, //12/11
+        pacienteId.nascimento, //12/11
+        pacienteId.endereco, //12/07
+        pacienteId.bairro, //12/07/2021
+        pacienteId.cidade, //12/07
+        pacienteId.cep, //12/07
+        //pacienteId.rg, //12/07
+        //pacienteId.estadocivil,
+        pacienteId.celular, //12/11
+        pacienteId.telefone1,
+        pacienteId.email,
+        //pacienteId.codigo_consultorio,
+        pacienteId.obs, //12/11
+        pacienteId.procedimento, //12/11
+        pacienteId.status, //12/07/2021
+        pacienteId.convenio, //12/07/2021
 
+        id,
+      ],
+      (err, res) => {
+        if (err) {
+          console.log('error: ', err);
+          result(null, err);
+          return;
+        }
+        if (res.affectedRows == 0) {
+          // not found paciente with the id
+          result({ kind: 'not_found' }, null);
+          return;
+        }
+
+        console.log('updated paciente: ', { id: id, ...pacienteId });
+        result(null, { id: id, ...pacienteId });
+      }
+    );
+  } catch (err) {
+    console.log({ error: true, message: err.message });
+  }
+};
 //delete 04/07/2021
 Paciente.remove = (id, result) => {
   sql.query('DELETE FROM pacientes WHERE  codigo = ?', id, (err, res) => {
