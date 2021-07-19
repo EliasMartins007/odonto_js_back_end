@@ -23,23 +23,6 @@ exports.create_a_convenio = (req, res, next) => {
   }
 };
 
-exports.list_all_convenio = function (req, res) {
-  try {
-    Convenio.getAllConvenio(function (err, convenio) {
-      //chama getAll da model
-      console.log('controller');
-      if (err) {
-        res.send(err);
-        console.log('res', convenio);
-      }
-      res.send(convenio);
-    });
-  } catch (err) {
-    console.log(err.message);
-    res.json({ error: true, message: err.message });
-  }
-};
-
 // Retrieve all Customers from the database. do exemplo async
 exports.findAll = (req, res, next) => {
   //adicionei next 11/06/2021

@@ -1,24 +1,5 @@
 const Usuario = require('../models/usuario.model.js');
 
-//original
-// exports.create_a_produto = function (req, res) {
-//   let new_produto = new Produto(req.body);
-
-//   //handles null error
-//   if (!new_produto.descricao) {
-//     res
-//       .status(400)
-//       .send({ error: true, message: 'please provide produto/descricao' });
-//   } else {
-//     Produto.creatProduto(new_produto, function (err, produto) {
-//       if (err)
-//         //apenas uma linha sem {}
-//         res.send(err);
-//       res.json(produto);
-//     });
-//   }
-// };
-//fim
 exports.create_a_usuario = (req, res, next) => {
   try {
     let new_usuario = new Usuario(req.body);

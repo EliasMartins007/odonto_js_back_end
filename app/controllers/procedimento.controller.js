@@ -1,8 +1,7 @@
 const Procedimento = require('../models/procedimento.model.js');
 //teste 17/06/2021
 const Consultorio = require('../models/consultorio.model.js'); //17/06
-//fim teste 17/06/2021
-//
+
 exports.create_a_procedimento = (req, res, next) => {
   try {
     let new_procedimento = new Procedimento(req.body);
@@ -17,12 +16,9 @@ exports.create_a_procedimento = (req, res, next) => {
         if (err) res.send(err);
 
         //res.json(procedimento); // original
-        //silvio17/06/2021
-        res.json({ procedimento }); //05/07/2021 comentado estava funcionando
-        // //teste 05/07/2021
+        res.json({ procedimento });
         // let jsonServico = JSON.parse(procedimento);
         // res.json(jsonServico);
-        // //fim teste 05/07/2021
       });
     }
   } catch (err) {
@@ -30,27 +26,6 @@ exports.create_a_procedimento = (req, res, next) => {
     next(err);
   }
 };
-// // create async
-// exports.create_a_produto = async (req, res) => {
-//   //let new_procedimento = new Produto(req.body);
-//   const {descricao, quantidade,
-//     this.quantidade = produto.quantidade;
-//     this.codigo_consultorio} = newcedimentodnomeody);
-//   //handles null error
-//   if (!new_produto.descricao) {
-//     res
-//       .status(400)
-//       .send({ error: true, message: 'please provide produto/descricao' });
-//   } else {
-//     Produto.creatProduto(new_produto, function (err, produto) {
-//       if (err)
-//         //apenas uma linha sem {}
-//         res.send(err);
-//       res.json(produto);
-//     });
-//   }
-// };
-// //fi create async
 
 exports.list_all_procedimento = function (req, res) {
   try {
@@ -69,21 +44,7 @@ exports.list_all_procedimento = function (req, res) {
   }
 };
 
-//outro mais moderno
-
-//teste async de outro tutorial
-
-// ==> Método responsável por listar todos os 'Products':
-// exports.listAllProducts = async (req, res) => {
-//   const response = await db.query(
-//     'SELECT * FROM products ORDER BY product_name ASC'
-//   );
-//   res.status(200).send(response.rows);
-// };
-// BUSCAR TODOS OS PROCEDIMENTOS
-// Retrieve all Customers from the database. do exemplo async
 exports.findAll = (req, res, next) => {
-  //adicionei next 11/06/2021
   try {
     Procedimento.getAll((err, data) => {
       if (err)
@@ -92,7 +53,7 @@ exports.findAll = (req, res, next) => {
         });
       else {
         //   res.send(data); // original funcionando 22/06/2021
-        //teste 23/06/2021
+
         res.json({ error: false, Procedimento: data });
       }
     });
@@ -231,29 +192,7 @@ exports.findFuncionario = (req, res, next) => {
   }
 };
 
-// exports.findAll = (req, res, next) => {
-//   //adicionei next 11/06/2021
-//   try {
-//     Procedimento.getAll((err, data) => {
-//       if (err)
-//         res.status(500).send({
-//           message: err.message || 'Some error occurred Procedimeno .',
-//         });
-//       else {
-//         //   res.send(data); // original funcionando 22/06/2021
-//         //teste 23/06/2021
-//         res.json({ error: false, Procedimento: data });
-//       }
-//     });
-//   } catch (err) {
-//     console.log({ error: true, message: err.message });
-//     next(err);
-//   }
-// };
-
-///fim teste func 07/07/2021
-
-//update 11/07/2021
+//update
 exports.update = (req, res) => {
   // Validate Request
   if (!req.body) {
@@ -286,7 +225,7 @@ exports.update = (req, res) => {
   }
 };
 
-//delete//delete  04/07/2021  teste async olhar se esta certo !!!
+//delete
 exports.delete = async (req, res, next) => {
   try {
     const as = await Procedimento.remove(
@@ -310,6 +249,6 @@ exports.delete = async (req, res, next) => {
     );
   } catch (err) {
     console.log(err);
-    next(err); //04/07/2021
+    next(err);
   }
 };

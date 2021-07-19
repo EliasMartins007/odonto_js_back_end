@@ -1,6 +1,5 @@
 const Produto = require('../models/produto.model.js');
 
-//original
 exports.create_a_produto = function (req, res) {
   let new_produto = new Produto(req.body);
 
@@ -18,10 +17,8 @@ exports.create_a_produto = function (req, res) {
     });
   }
 };
-//fim
-//
 
-// exports.create_a_produto = (req, res, next) => {
+// exports.create_a_produto = (req, res, next) => {    //mudar 19/07/2021
 //   try {
 //     let new_produto = new Produto(req.body);
 
@@ -44,77 +41,10 @@ exports.create_a_produto = function (req, res) {
 //   }
 // };
 
-// // create async
-// exports.create_a_produto = async (req, res) => {
-//   //let new_produto = new Produto(req.body);
-//   const {descricao, quantidade,
-//     this.quantidade = produto.quantidade;
-//     this.codigo_consultorio} = new Produto(req.body);
-//   //handles null error
-//   if (!new_produto.descricao) {
-//     res
-//       .status(400)
-//       .send({ error: true, message: 'please provide produto/descricao' });
-//   } else {
-//     Produto.creatProduto(new_produto, function (err, produto) {
-//       if (err)
-//         //apenas uma linha sem {}
-//         res.send(err);
-//       res.json(produto);
-//     });
-//   }
-// };
-// //fi create async
-
-exports.list_all_produto = function (req, res) {
-  try {
-    Produto.getAllProduto(function (err, produto) {
-      //chama getAll da model
-      console.log('controller');
-      if (err) {
-        res.send(err);
-        console.log('res', produto);
-      }
-      res.send(produto);
-    });
-  } catch (err) {
-    console.log(err.message);
-    res.json({ error: true, message: err.message });
-  }
-};
-
-//outro mais moderno
-
-//teste async de outro tutorial
-
-// ==> Método responsável por listar todos os 'Products':
-// exports.listAllProducts = async (req, res) => {
-//   const response = await db.query(
-//     'SELECT * FROM products ORDER BY product_name ASC'
-//   );
-//   res.status(200).send(response.rows);
-// };
-// Retrieve all Customers from the database. do exemplo async
-//funcionando 15/06/2021 e sendo usada
-// exports.findAll = (req, res, next) => {
-//   //adicionei next 11/06/2021
-//   try {
-//     Produto.getAll((err, data) => {
-//       if (err)
-//         res.status(500).send({
-//           message: err.message || 'Some error occurred produto.',
-//         });
-//       else res.send(data);
-//     });
-//   } catch (err) {
-//     console.log({ error: true, message: err.message });
-//     next(err);
-//   }
-// };
 //BUSCAR TODOS OS PRODUTOS
 //exports.findAll = async (req, res, next) => {
 exports.findAll = (req, res, next) => {
-  //adicionei next 11/06/2021 confirmar se teria aki na controller
+  //adicionei next confirmar se teria aki na controller
   try {
     Produto.getAll((err, data) => {
       if (err)
@@ -123,7 +53,7 @@ exports.findAll = (req, res, next) => {
         });
       else {
         //res.json({ data }); //original res.send(data); funcionando
-        //teste 22/06/2021
+
         res.json({ error: false, Produto: data });
       }
     });
@@ -154,13 +84,7 @@ exports.findOne = (req, res, next) => {
     next(err);
   }
 };
-//outro async
-// exports.listAllProducts = async (req, res) => {
-//   const response = await db.query(
-//     'SELECT * FROM products ORDER BY product_name ASC'
-//   );
-//   res.status(200).send(response.rows);
-// };
+
 //update
 exports.update = (req, res) => {
   // Validate Request
@@ -209,6 +133,6 @@ exports.delete = (req, res, next) => {
     });
   } catch (err) {
     console.log({ error: true, message: err.message });
-    next(err); //08/07/2021
+    next(err);
   }
 };
