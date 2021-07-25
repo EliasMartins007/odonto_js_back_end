@@ -205,4 +205,40 @@ Funcionario.remove = (id, result) => {
     result(null, res);
   });
 };
+//
+//token 24/07/2021
+//teste 17/06/2021   // login token 24/07/2021
+Funcionario.getUsuario2 = ({ login, senha }, result) => {
+  try {
+    // funcionando 'SELECT * FROM usuarios WHERE login_usuario = ? AND senha_usuario = ?',
+    // const login = await sql.query( retirei await 17/06/2021
+    sql.query(
+      // 'SELECT codigo, nome_usuario FROM usuarios WHERE login_usuario = ? AND senha_usuario = ?',
+      'SELECT codigo, nome FROM funcionarios WHERE login = ? AND senha = ?',
+      [login, senha],
+      //); não posso fechar aki 17/06/2021
+      (err, res) => {
+        // console.log({ login_usuario, senha_usuario });
+        console.log(res); //17/06/2021funcionando console.log(res);
+        if (res.length <= 0) {
+          console.log('usuario não encontrado');
+          result(false);
+        } else {
+          if (err) {
+            console.log('error: ', err);
+            result(null, err);
+          } else {
+            console.log('usuario : ', res);
+
+            result(null, res); // result(null, res[0]); //sem [0] é uma função anonima 16/06/2021
+            // return { login };
+          }
+        }
+      }
+    );
+  } catch (err) {
+    console.log({ error: true, message: err.message });
+  }
+};
+
 module.exports = Funcionario;

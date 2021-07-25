@@ -1,5 +1,16 @@
 const Funcionario = require('../models/funcionario.model.js');
 
+//gerar token login24/07/2021
+const jwt = require('jsonwebtoken');
+const SECRET_KEY3 = 'ODONTO';
+
+async function authenticate({ username, password }) {
+  // const user = await db.Usuario.scope('withHash').findOne({
+  const user = await db.Usuario.findOne({
+    where: { username },
+  });
+}
+//fim login
 exports.create_a_funcionario = (req, res, next) => {
   try {
     let new_funcionario = new Funcionario(req.body);
@@ -124,6 +135,68 @@ exports.delete = async (req, res, next) => {
     );
   } catch (err) {
     console.log('erro delete controller', err);
+    next(err);
+  }
+};
+
+// login funcionario
+//fiz mudanças 16/06/2021
+exports.authenticate = (req, res, next) => {
+  // adaptado com exports
+  // userService
+  authenticate
+    .authenticate(req.body)
+    .then((user) => res.json(user))
+    .catch(next);
+};
+//teste async login2 17/06/2021
+exports.LoginFuncionario = (req, res, next) => {
+  try {
+    //teste  { login_usuario = email, senha_usuario = password }
+    const { login, senha } = req.body; //login e senha 17/06/2021
+    if (!login || !senha) {
+      return res.status(400).send({
+        message: 'Favor informar  login e senha!!!', //valida preenchimento do campo  apenas
+      }); //teste 17/06/2021
+    }
+    Funcionario.getUsuario2({ login, senha }, (err, data) => {
+      if (!data) {
+        //teste 17/06/2021
+        console.log('não encontrou user consulta sql !!!');
+        // return; //certo 24/07/2021
+        res.status(404).send({
+          message: `Not found Usuário with id ${req.body}.`,
+        });
+        return;
+        // next();
+      }
+      //fim teste 17/06/2021
+      if (err) {
+        if (err.kind === 'not_found') {
+          res.status(404).send({
+            message: `Not found Usuário with id ${req.body}.`,
+          });
+        } else {
+          res.status(500).send({
+            message: 'Error retrieving Usuário with id ' + req.body,
+          });
+        }
+      } else {
+        //original funcionando 17/06/2021
+        // res.json({ data }); //res.send(data); //res.json(data); ou //res.send(data); os dois funcionam
+        //retornar json 17/06/2021{}
+        //teste gerar token tenho que mudar para outro arquivo futuramente
+        const token = jwt.sign({ user: data }, SECRET_KEY3, {
+          //SECRET_KEY2
+          //adicionei sign({user:})
+          expiresIn: 600,
+        });
+        res.send({ auth: true, token }); //funcionando
+        //return { usuarioId, token }; // não funciona
+      }
+    });
+  } catch (err) {
+    console.log({ error: true, message: err.message });
     next(err);
   }
 };

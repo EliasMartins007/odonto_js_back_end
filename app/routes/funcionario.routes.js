@@ -20,4 +20,8 @@ module.exports = function (app) {
   //delete
   //(DELETE) : localhost:3009/odonto/:funcionarioId
   app.delete('/odonto/funcionario/:funcionarioId', funcionario.delete);
+
+  //login sistema
+  //http://localhost:3009/odonto/loginFuncionario
+  app.post('/odonto/loginFuncionario', funcionario.LoginFuncionario); //24/07/2021
 };
