@@ -40,15 +40,21 @@ Paciente.creatpaciente = (newpaciente, result) => {
   //(nome, cpf, telefone1, procedimento, codigo_consultorio) 22/06/2021  14 campos no reducer
   sql.query(
     `INSERT INTO pacientes
-    (nome, cpf, sexo, telefone1, procedimento, codigo_consultorio)
+    (nome, cpf, sexo, nascimento, endereco, cidade, cep, celular, telefone1, procedimento, convenio, codigo_consultorio)
     VALUES
-    (?, ?, ?, ?, ?, ?)`,
+    (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
     [
       newpaciente.nome,
       newpaciente.cpf,
       newpaciente.sexo,
+      newpaciente.nascimento,
+      newpaciente.endereco,
+      newpaciente.cidade,
+      newpaciente.cep,
+      newpaciente.celular,
       newpaciente.telefone1,
       newpaciente.procedimento,
+      newpaciente.convenio,
       newpaciente.codigo_consultorio,
     ],
     function (err, res) {
@@ -79,35 +85,7 @@ Paciente.getAllpaciente = function (result) {
     }
   });
 };
-// // transformei arrow elias
-// paciente.getAllpaciente = (result) => {
-//   sql.query('Select * from pacientes', (err, res) => {
-//     if (err) {
-//       console.log('error: ', err);
-//       result(null, err);
-//       return;
-//     } else {
-//       console.log('paciente : ', res);
-//       result(null, res);
-//     }
-//   });
-// };
 
-//funcionando 22/06/2021
-
-// Paciente.getAll = (result) => {
-//   sql.query('SELECT * FROM pacientes', (err, res) => {
-//     if (err) {
-//       console.log('error: ', err);
-//       result(null, err);
-//       return;
-//     }
-
-//     console.log('paciente: ', res);
-//     result(null, res);
-//   });
-// };
-//teste json
 Paciente.getAll = (result) => {
   const paciente = sql.query(
     'SELECT * FROM pacientes ORDER BY nome ASC',
@@ -127,31 +105,6 @@ Paciente.getAll = (result) => {
   );
 };
 
-//fim teste
-
-//teste adequar controller para model  funcionou falta ajustes 11/06
-// paciente.listAllProducts = async (result) => {
-//   await sql.query('SELECT * FROM pacientes', (err, res) => {
-//     if (err) {
-//       console.log('error: ', err);
-//       result(null, err);
-//       return;
-//     }
-
-//     console.log('paciente: ', res);
-//     result(null, res);
-//   });
-// };
-
-// //teste adequar async original do exemplo 11/06/2021
-// exports.listAllProducts = async (req, res) => {
-//   const response = await db.query(
-//     'SELECT * FROM products ORDER BY product_name ASC'
-//   );
-//   res.status(200).send(response.rows);
-// };
-
-//teste asyn
 Paciente.findById = (pacienteId, result) => {
   const pa = sql.query(
     'SELECT * FROM pacientes WHERE codigo = ?',
@@ -181,9 +134,7 @@ Paciente.findById = (pacienteId, result) => {
     }
   );
 };
-//fim teste busca unica
-//asyn await por enquanto gerando erro no console !!!
-//UPDASTE PACIENTE 12/07/2021
+
 Paciente.updateById = (id, pacienteId, result) => {
   try {
     sql.query(
@@ -193,22 +144,22 @@ Paciente.updateById = (id, pacienteId, result) => {
       [
         pacienteId.nome,
         pacienteId.cpf,
-        pacienteId.sexo, //12/11
-        pacienteId.nascimento, //12/11
-        pacienteId.endereco, //12/07
-        pacienteId.bairro, //12/07/2021
-        pacienteId.cidade, //12/07
-        pacienteId.cep, //12/07
-        //pacienteId.rg, //12/07
+        pacienteId.sexo,
+        pacienteId.nascimento,
+        pacienteId.endereco,
+        pacienteId.bairro,
+        pacienteId.cidade,
+        pacienteId.cep,
+        //pacienteId.rg,
         //pacienteId.estadocivil,
-        pacienteId.celular, //12/11
+        pacienteId.celular,
         pacienteId.telefone1,
         pacienteId.email,
         //pacienteId.codigo_consultorio,
-        pacienteId.obs, //12/11
-        pacienteId.procedimento, //12/11
-        pacienteId.status, //12/07/2021
-        pacienteId.convenio, //12/07/2021
+        pacienteId.obs,
+        pacienteId.procedimento,
+        pacienteId.status,
+        pacienteId.convenio,
 
         id,
       ],
@@ -232,7 +183,7 @@ Paciente.updateById = (id, pacienteId, result) => {
     console.log({ error: true, message: err.message });
   }
 };
-//delete 04/07/2021
+//delete
 Paciente.remove = (id, result) => {
   sql.query('DELETE FROM pacientes WHERE  codigo = ?', id, (err, res) => {
     if (err) {
@@ -246,6 +197,20 @@ Paciente.remove = (id, result) => {
       return;
     }
     console.log('deleted paciente  with codigo: ', id);
+    result(null, res);
+  });
+};
+
+//convenio
+Paciente.getAllConvenio = (result) => {
+  sql.query('SELECT * FROM convenio ORDER BY nome ASC', (err, res) => {
+    //12/07/2021
+    if (err) {
+      console.log('error: ', err);
+      result(null, err);
+      return;
+    }
+    console.log('convenio: ', res);
     result(null, res);
   });
 };

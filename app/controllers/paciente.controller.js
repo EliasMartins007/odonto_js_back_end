@@ -169,3 +169,24 @@ exports.delete = async (req, res, next) => {
     next(err); //04/07/2021
   }
 };
+
+//convenios
+exports.findAllConvenios = (req, res, next) => {
+  //adicionei next 11/06/2021
+  try {
+    Paciente.getAllConvenio((err, data) => {
+      if (err)
+        res.status(500).send({
+          message: err.message || 'Some error occurred convenio.',
+        });
+      else {
+        // res.send(data); //original funcionando 22/06/2021
+        //teste 23/06/2021
+        res.json({ error: false, Convenio: data });
+      }
+    });
+  } catch (err) {
+    console.log({ error: true, message: err.message });
+    next(err);
+  }
+};

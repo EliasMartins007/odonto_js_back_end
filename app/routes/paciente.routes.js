@@ -22,4 +22,7 @@ module.exports = function (app) {
   //delete //04/07/2021
   //(DELETE) : localhost:3009/odonto/:pacienteId
   app.delete('/odonto/paciente/:pacienteId', paciente.delete);
+
+  //convenios  //erro 24/07/2021 busca pacienteId
+  app.get('/odonto/paciente/convenios', paciente.findAllConvenios);
 };
